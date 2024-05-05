@@ -17,7 +17,13 @@ A typical way to create Java applications is to use the Spring Initializr at [ht
 In an __empty__ directory execute the curl command line below:
 
 ```bash
-curl https://start.spring.io/starter.tgz -d type=maven-project -d dependencies=web -d baseDir=simple-application -d bootVersion=3.2.5 -d javaVersion=17 | tar -xzvf -
+curl https://start.spring.io/starter.tgz \
+    -d type=maven-project \
+    -d dependencies=web \
+    -d baseDir=simple-application \
+    -d bootVersion=3.2.5 \
+    -d javaVersion=17 \
+    | tar -xzvf -
 ```
 
 > We force the Spring Boot version to be 3.2.5, and keep default settings that use the `com.example.demo` package.
@@ -174,7 +180,13 @@ If you need to check your code, the final project is available in the ["simple-a
 Here is the final script to build and deploy everything that was done in this guide:
 
 ```
-curl https://start.spring.io/starter.tgz -d type=maven-project -d dependencies=web -d baseDir=simple-application -d bootVersion=3.2.5 -d javaVersion=17 | tar -xzvf -
+curl https://start.spring.io/starter.tgz \
+    -d type=maven-project \
+    -d dependencies=web \
+    -d baseDir=simple-application \
+    -d bootVersion=3.2.5 \
+    -d javaVersion=17 \
+    | tar -xzvf -
 cd simple-application
 cat > HelloController.java << EOF
 package com.example.demo;
