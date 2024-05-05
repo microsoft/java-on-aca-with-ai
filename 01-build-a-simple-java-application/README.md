@@ -1,4 +1,4 @@
-# 02 - Build a simple Java application
+# 01 - Build a simple Java application
 
 __This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
@@ -204,6 +204,7 @@ public class HelloController {
 }
 EOF
 mv HelloController.java src/main/java/com/example/demo/HelloController.java
+./mvnw clean package
 az containerapp up \
     --name $APP_NAME \
     --resource-group $RESOURCE_GROUP \
@@ -211,8 +212,7 @@ az containerapp up \
     --environment $ENVIRONMENT \
     --artifact ./target/demo-0.0.1-SNAPSHOT.jar \
     --ingress external \
-    --target-port 8080 \
-    --query properties.configuration.ingress.fqdn
+    --target-port 8080
 cd ..
 ```
 
