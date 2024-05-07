@@ -10,7 +10,7 @@ In this section, we'll set up everything you need to expeditiously complete the 
 
 This training lab requires the following to be installed on your machine:
 
-* [JDK 17](https://docs.microsoft.com/java/openjdk/download?WT.mc_id=asa-java-judubois#openjdk-17)
+* [JDK 17](https://docs.microsoft.com/java/openjdk/download#openjdk-17)
 * A text editor or an IDE. If you do not already have an IDE for Java development, we recommend using [Visual Studio Code](https://code.visualstudio.com) with the [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack).
 
 * The Bash shell. While Azure CLI should behave identically on all environments, shell semantics vary. Therefore, only bash can be used with the commands in this training. To complete this training on Windows, use [Git Bash that accompanies the Windows distribution of Git](https://git-scm.com/download/win). **Use only Git Bash to complete this training on Windows. Do not use WSL, CloudShell, or any other shell.**

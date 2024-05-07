@@ -8,8 +8,7 @@ In this section, we'll build a similar service to the one from section 1, but wi
 
 ## What we are going to build
 
-This guide builds upon the previous guides: we are going to build again a simple Spring Boot microservice like in [01 - Build a simple Java application
-](../01-build-a-simple-java-application/README.md), but this time it will use two major Spring Cloud features:
+This guide builds upon the previous guides: we are going to build again a simple Spring Boot microservice like in [01 - Build a simple Java application](../01-build-a-simple-java-application/README.md), but this time it will use two major Spring Cloud features:
 
 - It will be connected to a Spring Cloud Service Registry so it can discover other microservices, as well as being discovered itself!
 
@@ -94,8 +93,7 @@ kill %1
 
 ## Create and deploy the application on Azure Container Apps
 
-As in [01 - Build a simple Java application
-](../01-build-a-simple-java-application/README.md), create a specific `spring-cloud-microservice` application:
+As in [01 - Build a simple Java application](../01-build-a-simple-java-application/README.md), create a specific `spring-cloud-microservice` application:
 
 ```bash
 cd spring-cloud-microservice
@@ -111,81 +109,80 @@ az containerapp up \
 cd ..
 ```
 
+After the application created, update the application to bind with the Managed Eureka Server and the Managed Config Server created in previous sections.
+
 ```bash
 az containerapp update \
     --name spring-cloud-microservice \
     --resource-group $RESOURCE_GROUP \
-    --bind $CONFIG_SERVER_NAME
+    --bind $CONFIG_SERVER_NAME $EUREKA_SERVER_NAME
 ```
 
 ## Test the project in the cloud
 
-Go to [the Azure portal](https://portal.azure.com/?WT.mc_id=azurespringcloud-github-judubois):
+Go to [the Azure portal](https://portal.azure.com):
 
-- Look for your Azure Spring Apps instance in your resource group
-- Go to "Apps"
-  - Verify that `spring-cloud-microservice` has a `Registration status` of `1/1`. This shows that it is correctly registered in Spring Cloud Service Registry.
-  - Select `spring-cloud-microservice` to have more information on the microservice.
-- Copy/paste the "Test endpoint" that is provided.
+- Look for your container app named as `$APP_NAME` in your resource group named as `$RESOURCE_GROUP`
+- Find the "Application Url" in the "Essentials" section
 
-You can now use cURL again to test the `/hello` endpoint, this time it is served by Azure Spring Apps and configured using the Spring Config Server from [04 - Configure a Spring Cloud Config server](../04-configure-a-spring-cloud-config-server/README.md).
+You can now use `curl` again to test the `/hello` endpoint, this time it is served by Azure Container Apps and configured using the Managed Config Server from [03 - Create and configure Managed Config Server for Spring](../03-create-and-configure-managed-config-server-for-spring/README.md).
 
 As a result, requesting the `/hello` endpoint should return the message that we configured in the `application.yml` file, coming from the Spring Cloud Config Server:
 
 ```bash
-Configured by Azure Spring Apps
+Configured by Azure Container Apps - Managed Config Server for Spring
 ```
 
 ## Stream application logs
 
-When you run an application on your machine, you can see its output in the console. When you run a microservice on Azure Spring Apps, you can also see its console output through Azure CLI:
+When you run an application on your machine, you can see its output in the console. When you run a microservice on Azure Container Apps, you can also see its console output through Azure CLI:
 
 ```bash
-az spring app logs -n spring-cloud-microservice -f
+az containerapp logs show --name spring-cloud-microservice --resource-group $RESOURCE_GROUP
 ```
 
-_Please be aware it might take a couple of minutes for the logs to show up._
+_Please be aware it might take a couple of seconds for the logs to show up._
 
 You should see the console output of `spring-cloud-microservice` scroll by on your terminal:
 
 ![Console output](media/02-console-output.png)
 
-Press CTRL+C to stop following the output and return to the shell.
+From the console output, you can see that the application is successfully registered to the Managed Eureka Server from [02 - Create Managed Eureka Server for Spring](../02-create-and-configure-managed-eureka-server-for-spring/README.md).
 
 ## Query application logs
 
 Streaming the console output as we just did may be helpful in understanding the immediate state of a microservice. However, sometimes it's necessary to look further into the past or to look for something specific. This is easily done with Log Analytics. In section 3, we enabled log aggregation in Azure Log Analytics. Such settings changes can take 1-2 minutes to apply, so by now, you should be able to query Azure Log Analytics.
 
-[Open Azure Portal](https://portal.azure.com/?WT.mc_id=java-spring-judubois) and navigate to your Azure Spring Apps instance. Click on "Logs". This is a shortcut to the Log Analytics workspace that was created earlier. If a tutorial appears, feel free to skip it for now.
+[Open Azure Portal](https://portal.azure.com) and navigate to your container app `spring-cloud-microservice`. Click on "Logs". This is a shortcut to the Log Analytics workspace that was created earlier. If a tutorial appears, feel free to skip it for now.
 
 This workspace allows you to run queries on the aggregated logs. The most common query is to get the latest log from a specific application:
 
-__Important:__ Spring Boot applications logs have a dedicated `AppPlatformLogsforSpring` type.
+__Important:__ Applications logs have a dedicated `ContainerAppConsoleLogs_CL` type.
 
-Here is how to get its 50 most recent logs of the `AppPlatformLogsforSpring` type for the microservice we just deployed:
+Here is how to get its 50 most recent logs of the `ContainerAppConsoleLogs_CL` type for the microservice we just deployed:
 
-Insert this text in the text area that states "Type your queries here or click on of the example queries to start".  Click the text of the query, then click "Run".
+Insert this text in the text area that states "Type your queries here or click on of the queries to start".  Click the text of the query, then click "Run".
 
 ```sql
-AppPlatformLogsforSpring
-| where AppName == "spring-cloud-microservice"
-| project TimeGenerated, Log
-| order by TimeGenerated desc
+ContainerAppConsoleLogs_CL
+| where ContainerAppName_s == "spring-cloud-microservice"
+| project time_t, Log_s
+| order by time_t desc
 | limit 50
 ```
 
 ![Query logs](media/03-logs-query.png)
 
->💡 It can also take 1-2 minutes for the console output of an Azure Spring Apps microservice to be read into Log Analytics.
+>💡 It can also take 1-2 minutes for the console output of an Azure Container Apps microservice to be read into Log Analytics.
 
 ## Conclusion
 
-Congratulations, you have deployed a complete Spring Cloud microservice, using Spring Cloud Service Registry and Spring Cloud Config Server!
+Congratulations, you have deployed a complete Spring Cloud microservice, using Spring Cloud Eureka Server and Spring Cloud Config Server!
 
 If you need to check your code, the final project is available in the ["spring-cloud-microservice" folder](spring-cloud-microservice/).
 
 ---
 
-⬅️ Previous guide: [04 - Configure a Spring Cloud Config server](../04-configure-a-spring-cloud-config-server/README.md)
+⬅️ Previous guide: [03 - Create and configure Managed Config Server for Spring](../03-create-and-configure-managed-config-server-for-spring/README.md)
 
 ➡️ Next guide: [06 - Build a reactive Spring Boot microservice using Cosmos DB](../06-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)

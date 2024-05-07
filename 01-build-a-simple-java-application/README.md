@@ -14,7 +14,7 @@ A typical way to create Java applications is to use the Spring Initializr at [ht
 
 >💡 __Note:__ All subsequent commands in this workshop should be run from the same directory, except where otherwise indicated via `cd` commands.
 
-In an __empty__ directory execute the curl command line below:
+In an __empty__ directory execute the `curl` command line below:
 
 ```bash
 curl https://start.spring.io/starter.tgz \
@@ -160,7 +160,22 @@ The `containerapp up` command will output detail build and deploy steps performe
 
 ## Test the project in the cloud
 
-The `containerapp up` command will return the FQDN (fully qualified domain name) for the container app, somthing like `http://simple-app.bluedune-c2667fb6.canadacentral.azurecontainerapps.io`. You can also fetch the FQDN by `containerapp show` command.
+Go to [the Azure portal](https://portal.azure.com):
+
+- Look for your container app named as `$APP_NAME` in your resource group named as `$RESOURCE_GROUP`
+- Find the "Application Url" in the "Essentials" section
+![Application Url](media/00-application-url.png)
+- This will give you something like:
+  `https://simple-app.bluedune-c2667fb6.canadacentral.azurecontainerapps.io`
+- Append `/hello` to the Url.  Failure to do this will result in a "404 not found"
+
+You can now `curl` again to test the `/hello` endpoint, this time served by Azure Container Apps. For example.
+
+```bash
+curl https://simple-app.bluedune-c2667fb6.canadacentral.azurecontainerapps.io/hello
+```
+
+Alternatively, you can find the "Application Url" in CLI command.
 
 ```bash
 az containerapp show \
@@ -168,8 +183,6 @@ az containerapp show \
     --resource-group $RESOURCE_GROUP \
     --query properties.configuration.ingress.fqdn
 ```
-
-Append `/hello` to the FQDN, and open it in a web browser. If successful, you should see the message: `Hello from Java application on Azure Container Apps`.
 
 ## Conclusion
 
@@ -218,4 +231,4 @@ cd ..
 
 ---
 
-➡️ Next guide: 
+➡️ Next guide: [02 - Create Managed Eureka Server for Spring](../02-create-managed-eureka-server-for-spring/README.md)

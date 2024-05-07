@@ -1,8 +1,8 @@
-# 02 - Create and configure Managed Config Server for Spring
+# 03 - Create and configure Managed Config Server for Spring
 
 __This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
-A key feature of cloud-native applications is *externalized configuration* - the ability to store, manage, and version configuration separately from the application code. In this section, we'll configure a [Spring Cloud Config Server](https://cloud.spring.io/spring-cloud-config) to enable this functionality. In the next section, you'll see how Spring Cloud Config can inject configuration from a Git repository into your application.
+Another key feature of cloud-native applications is *externalized configuration* - the ability to store, manage, and version configuration separately from the application code. In this section, we'll create and configure a [Spring Cloud Config Server](https://spring.io/projects/spring-cloud-config) to enable this functionality. In the next section, you'll see how Spring Cloud Config can inject configuration from a Git repository into your application.
 
 ---
 
@@ -73,17 +73,16 @@ Once the token is generated, leave that tab open until the end of this section.
 
 If you need more help here, please follow the [GitHub guide to create a personal token documentation.](https://help.github.com/en/articles/creating-a-personal-access-token-for-the-command-line)
 
-## Create and configure Config Server to access the Git repository
+## Create and configure a Managed Config Server to access the Git repository
 
-Define the environment variables. Please note that those environment variables defined in [01 - Build a simple Java application
-](../01-build-a-simple-java-application/README.md) will also be used.
+Define the environment variables. Please note that those environment variables defined in [01 - Build a simple Java application](../01-build-a-simple-java-application/README.md) will also be used.
 
 ```bash
 CONFIG_SERVER_NAME="configserver01"
 GIT_URL="Your Git repository URL"
 ```
 
-Create the Managed Config Server for Spring and set its configuration source as your Git repository.
+Create the Managed Config Server and set its configuration source as your Git repository.
 
 ```bash
 az containerapp env java-component spring-cloud-config create \
@@ -101,7 +100,6 @@ In the next section, we will create an application that consumes this configurat
 
 ---
 
-⬅️ Previous guide: [01 - Build a simple Java application
-](../01-build-a-simple-java-application/README.md)
+⬅️ Previous guide: [02 - Create Managed Eureka Server for Spring](../02-create-and-configure-managed-eureka-server-for-spring/README.md)
 
-➡️ Next guide: [03 - Build a Spring Boot microservice using Spring Cloud features](../03-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
+➡️ Next guide: [04 - Build a Spring Boot microservice using Spring Cloud features](../04-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
