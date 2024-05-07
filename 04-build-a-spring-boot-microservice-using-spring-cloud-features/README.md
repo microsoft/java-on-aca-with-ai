@@ -191,4 +191,4 @@ If you need to check your code, the final project is available in the ["spring-c
 
 ⬅️ Previous guide: [03 - Create and configure Managed Config Server for Spring](../03-create-and-configure-managed-config-server-for-spring/README.md)
 
-➡️ Next guide: [06 - Build a reactive Spring Boot microservice using Cosmos DB](../06-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
+➡️ Next guide: [05 - Build a reactive Spring Boot microservice using Cosmos DB](../05-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
