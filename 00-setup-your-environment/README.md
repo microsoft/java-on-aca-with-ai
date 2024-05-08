@@ -13,10 +13,10 @@ To save time, we provide an ARM template for creating all the Azure resources yo
 > 💡 Use the following settings for deploying the Azure Template:
 >
 > * Create a new resource group.
-> * In the location field, select the nearest region from [the list of regions where Azure Spring Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=spring-apps&regions=all).
+> * In the location field, select the nearest region from [the list of regions where Azure Container Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=container-apps&regions=all).
 > * Save the MySQL password you specify in this step. You will need it in section 6. If you don't set one, it will be `super$ecr3t`.
 
-[![Deploy to Azure](media/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fazure-spring-cloud-training%2Fmaster%2F00-setup-your-environment%2Fazuredeploy.json?WT.mc_id=asa-java-judubois)
+[![Deploy to Azure](media/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json)
 
 >⏱ The resource provisioning will take some time. __Do not wait!__ Continue with the workshop.
 
