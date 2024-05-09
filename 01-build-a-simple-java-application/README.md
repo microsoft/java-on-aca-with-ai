@@ -158,7 +158,7 @@ Go to [the Azure portal](https://portal.azure.com):
 
 - Look for your container app named as `$APP_NAME` in your resource group named as `$RESOURCE_GROUP`
 - Find the "Application Url" in the "Essentials" section
-![Application Url](media/00-application-url.png)
+![Application Url](media/01-application-url.png)
 - This will give you something like:
   `https://simple-app.bluedune-c2667fb6.canadacentral.azurecontainerapps.io`
 - Append `/hello` to the Url.  Failure to do this will result in a "404 not found"

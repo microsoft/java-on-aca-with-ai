@@ -13,7 +13,7 @@ Another key feature of cloud-native applications is *externalized configuration*
 > To use this shortcut:
 >  1. Define the following environment variables.
 >     ```bash
->     CONFIG_SERVER_NAME="my-config-server"
+>     CONFIG_SERVER_NAME="configserver01"
 >     GIT_URL="https://github.com/Azure-Samples/java-on-aca-sample-public-config.git"
 >     ```
 >  2. Create the Managed Config Server for Spring and set its configuration source as the public Git repository.
