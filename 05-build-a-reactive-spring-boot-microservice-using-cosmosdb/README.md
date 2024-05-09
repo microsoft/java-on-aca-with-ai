@@ -10,7 +10,7 @@ We'll use the reactive programming paradigm to build our microservice in this se
 
 ## Prepare the Azure Cosmos DB database
 
-From section 00, you should already have a Cosmos DB account named `sclabc-<unique string>`.
+From section 00, you should already have a Cosmos DB account named `javalab-cosmos-<unique string>`. [Open Azure Portal](https://portal.azure.com) and navigate to your Cosmos DB account.
 
 - Click on the `Data Explorer` menu item
   - Expand the container named `azure-spring-apps-cosmosdb`.

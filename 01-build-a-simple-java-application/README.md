@@ -129,12 +129,6 @@ APP_NAME="simple-app"
 
 ### Deploy the application
 
-Firstly, create the resource group.
-
-```bash
-az group create --name $RESOURCE_GROUP --location $LOCATION
-```
-
 Build and deploy your first container app from your local JAR file with the `containerapp up` command.
 
 This command:
@@ -217,7 +211,6 @@ public class HelloController {
 }
 EOF
 mv HelloController.java src/main/java/com/example/demo/HelloController.java
-./mvnw clean package
 az containerapp up \
     --name $APP_NAME \
     --resource-group $RESOURCE_GROUP \

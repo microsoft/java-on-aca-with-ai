@@ -103,7 +103,6 @@ As in [01 - Build a simple Java application](../01-build-a-simple-java-applicati
 
 ```bash
 cd spring-cloud-microservice
-./mvnw clean package
 az containerapp up \
     --name spring-cloud-microservice \
     --resource-group $RESOURCE_GROUP \

@@ -14,10 +14,6 @@
             "defaultValue": "[concat('javalab-cosmos-', uniqueString(resourceGroup().id))]",
             "type": "string"
         },
-        "log_analytics_workspace_name": {
-            "defaultValue": "[concat('javalab-la-', uniqueString(resourceGroup().id))]",
-            "type": "string"
-        }, 
         "mysql_admin_password": {
             "type" :"securestring",
             "defaultValue": "super$ecr3t",
@@ -85,27 +81,15 @@
             }
         },
         {
-            "type": "Microsoft.OperationalInsights/workspaces",
-            "apiVersion": "2015-11-01-preview",
-            "name": "[parameters('log_analytics_workspace_name')]",
-            "location": "[parameters('location')]",
-            "properties": {
-                "sku": {
-                    "name": "PerGB2018"
-                },
-                "retentionInDays": 30
-            }
-        },
-        {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('cosmosdb_account_name'), '/azure-spring-apps-cosmosdb')]",
+            "name": "[concat(parameters('cosmosdb_account_name'), '/java-on-aca-cosmosdb')]",
             "dependsOn": [
                 "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosdb_account_name'))]"
             ],
             "properties": {
                 "resource": {
-                    "id": "azure-spring-apps-cosmosdb"
+                    "id": "java-on-aca-cosmosdb"
                 },
                 "options": {
                     "throughput" : "400"
@@ -115,9 +99,9 @@
         {
             "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
             "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('cosmosdb_account_name'), '/azure-spring-apps-cosmosdb/City')]",
+            "name": "[concat(parameters('cosmosdb_account_name'), '/java-on-aca-cosmosdb/City')]",
             "dependsOn": [
-                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('cosmosdb_account_name'), 'azure-spring-apps-cosmosdb')]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('cosmosdb_account_name'), 'java-on-aca-cosmosdb')]",
                 "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosdb_account_name'))]"
             ],
             "properties": {
