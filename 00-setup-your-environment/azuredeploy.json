@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2014-05-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "location" : {
@@ -25,7 +25,7 @@
     "resources": [
         {
             "type": "Microsoft.DBforMySQL/flexibleServers",
-            "apiVersion": "2023-12-30",
+            "apiVersion": "2021-05-01",
             "name": "[parameters('db_for_mysql_name')]",
             "location": "[parameters('location')]",
             "sku": {
@@ -47,7 +47,7 @@
         },
         {
             "type": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
-            "apiVersion": "2023-12-30",
+            "apiVersion": "2021-05-01",
             "name": "[concat(parameters('db_for_mysql_name'), '/AllowAllAzureServicesAndResourcesWithinAzureIps')]",
             "dependsOn": [
                 "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('db_for_mysql_name'))]"
@@ -59,7 +59,7 @@
         },
         {
             "type": "Microsoft.DBforMySQL/flexibleServers/databases",
-            "apiVersion": "2023-12-30",
+            "apiVersion": "2021-05-01",
             "name": "[concat(parameters('db_for_mysql_name'), '/java-on-aca-db')]",
             "dependsOn": [
                 "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('db_for_mysql_name'))]"
