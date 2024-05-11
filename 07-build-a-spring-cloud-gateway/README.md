@@ -38,7 +38,7 @@ spring.cloud.gateway.globalcors.corsConfigurations.[/**].allowedMethods=GET
 ```
 
 - The `spring.cloud.gateway.discovery.locator.enabled=true` part is to configure Spring Cloud Gateway to use the Spring Cloud Service Registry to discover the available microservices.
-- The `spring.cloud.gateway.globalcors.corsConfiguration` part is to allow Cross-Origin Resource Sharing (CORS) requests to our gateway. This will be helpful in the next guide, when we will add a front-end that is not hosted on Azure Spring Apps.
+- The `spring.cloud.gateway.globalcors.corsConfiguration` part is to allow Cross-Origin Resource Sharing (CORS) requests to our gateway. This will be helpful in the next guide, when we will add a front-end application.
 
 ## Create the application on Azure Container Apps
 

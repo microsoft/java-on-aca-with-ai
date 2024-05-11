@@ -64,7 +64,7 @@ java -jar target/demo-0.0.1-SNAPSHOT.jar &
 cd ..
 ```
 
-Requesting the `/hello` endpoint should return the "Hello from Azure Spring Apps" message.
+Requesting the `/hello` endpoint should return the "Hello from Java application on Azure Container Apps" message.
 
 ```bash
 curl http://127.0.0.1:8080/hello

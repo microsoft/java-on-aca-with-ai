@@ -201,6 +201,15 @@ Here is the response you should receive:
 
 If you need to check your code, the final project is available in the ["weather-service" folder](weather-service/).
 
+Same as `city-service`, update the `weather-service` to only accept internal traffic.
+
+```bash
+az containerapp ingress update \
+    --name weather-service \
+    --resource-group $RESOURCE_GROUP \
+    --type internal
+```
+
 ---
 
 ⬅️ Previous guide: [05 - Build a reactive Spring Boot microservice using Cosmos DB](../05-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)

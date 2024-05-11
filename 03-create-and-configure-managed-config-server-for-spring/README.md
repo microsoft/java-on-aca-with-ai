@@ -19,10 +19,10 @@ Another key feature of cloud-native applications is *externalized configuration*
 >  2. Create the Managed Config Server for Spring and set its configuration source as the public Git repository.
 >     ```bash
 >     az containerapp env java-component spring-cloud-config create \
->       --environment $ENVIRONMENT \
->       --resource-group $RESOURCE_GROUP \
->       --name $CONFIG_SERVER_NAME \
->       --configuration spring.cloud.config.server.git.uri=$GIT_URL
+>         --environment $ENVIRONMENT \
+>         --resource-group $RESOURCE_GROUP \
+>         --name $CONFIG_SERVER_NAME \
+>         --configuration spring.cloud.config.server.git.uri=$GIT_URL
 >     ```
 >  
 >  We have enabled Azure Container Apps to create a Managed Config Server for Spring, with the configuration files from the public repository. You can now proceed to the next guide: 
@@ -40,16 +40,16 @@ For the moment, our `application.yml` will just store a message to check if the 
 
 ```yaml
 application:
-    message: Configured by Azure Container Apps - Managed Config Server for Spring
+    message: Configured by Managed Config Server for Spring. Configuration in private repository.
 ```
 
 Commit and push the new file.
 
 ## Create a GitHub personal token
 
-Azure Spring Apps can access Git repositories that are public, secured by SSH, or secured using HTTP basic authentication. We will use that last option, as it is easier to create and manage with GitHub.
+Managed Config Server for Spring can access Git repositories that are public, secured by SSH, or secured using HTTP basic authentication. We will use that last option, as it is easier to create and manage with GitHub.
 
-Let's create a new token by going into the GitHub developer settings and selecting "Personal access tokens" and "Fine-grained tokens" in the menu. Give it a name such as `spring apps training`.
+Let's create a new token by going into the [GitHub developer settings](https://github.com/settings/apps) and selecting "Personal access tokens" and "Fine-grained tokens" in the menu. Give it a name such as `java-on-aca-training`.
 
 ![GitHub personal access token](media/01-github-personal-access-token.png)
 
@@ -79,17 +79,21 @@ Define the environment variables. Please note that those environment variables d
 
 ```bash
 CONFIG_SERVER_NAME="configserver01"
-GIT_URL="Your Git repository URL"
+GIT_URL="Change to your Git repository URL: https://github.com/{repository}.git"
+GIT_USERNAME="Change to your Github login name"
+GIT_PAT="Change to the personal access token we created in the previous section"
 ```
 
 Create the Managed Config Server and set its configuration source as your Git repository.
 
 ```bash
 az containerapp env java-component spring-cloud-config create \
-  --environment $ENVIRONMENT \
-  --resource-group $RESOURCE_GROUP \
-  --name $CONFIG_SERVER_NAME \
-  --configuration spring.cloud.config.server.git.uri=$GIT_URL
+    --environment $ENVIRONMENT \
+    --resource-group $RESOURCE_GROUP \
+    --name $CONFIG_SERVER_NAME \
+    --configuration spring.cloud.config.server.git.uri=$GIT_URL \
+        spring.cloud.config.server.git.username=$GIT_USERNAME \
+        spring.cloud.config.server.git.password=$GIT_PAT
 ```
 
 ## Review

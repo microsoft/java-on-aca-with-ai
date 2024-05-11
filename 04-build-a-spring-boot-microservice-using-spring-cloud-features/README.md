@@ -137,8 +137,10 @@ You can now use `curl` again to test the `/hello` endpoint, this time it is serv
 As a result, requesting the `/hello` endpoint should return the message that we configured in the `application.yml` file, coming from the Spring Cloud Config Server:
 
 ```bash
-Configured by Azure Container Apps - Managed Config Server for Spring
+Configured by Managed Config Server for Spring. Configuration file in private repository.
 ```
+
+> If you are using public repository [https://github.com/Azure-Samples/java-on-aca-sample-public-config.git](https://github.com/Azure-Samples/java-on-aca-sample-public-config.git) to set up the Config Server, you should see `Configured by Managed Config Server for Spring. Configuration file in public repository.`.
 
 ## Stream application logs
 

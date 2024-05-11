@@ -140,7 +140,7 @@ public class CityController {
 
 ## Create the application on Azure Container Apps
 
-As in [01 - Build a simple Java application](../01-build-a-simple-java-application/README.md), create a specific `city-service` application in your Azure Spring Apps instance:
+As in [01 - Build a simple Java application](../01-build-a-simple-java-application/README.md), create a specific `city-service` application in your Azure Container Apps:
 
 ```bash
 cd city-service
@@ -200,6 +200,15 @@ You can now use `curl` to test the `/cities` endpoint, and it should give you th
 ```
 
 If you need to check your code, the final project is available in the ["city-service" folder](city-service/).
+
+Finally, let's update the `city-service` to make it accept internal traffic only instead of public accessible.
+
+```bash
+az containerapp ingress update \
+    --name city-service \
+    --resource-group $RESOURCE_GROUP \
+    --type internal
+```
 
 ---
 

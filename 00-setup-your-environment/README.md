@@ -8,7 +8,7 @@ In this section, we'll set up everything you need to expeditiously complete the 
 
 ## Creating Azure Resources
 
-To save time, we provide an ARM template for creating all the Azure resources you will need for this lab other than the Azure Spring Apps instance itself. Use the Deploy to Azure button below.
+To save time, we provide an ARM template for creating all the Azure resources you will need for this lab other than the Azure Container Apps itself. Use the Deploy to Azure button below.
 
 > 💡 Use the following settings for deploying the Azure Template:
 >
