@@ -21,6 +21,7 @@ curl https://start.spring.io/starter.tgz \
     -d type=maven-project \
     -d dependencies=web \
     -d baseDir=simple-application \
+    -d name=simple-application \
     -d bootVersion=3.2.5 \
     -d javaVersion=17 \
     | tar -xzvf -
@@ -31,7 +32,7 @@ curl https://start.spring.io/starter.tgz \
 ## Add a new Spring MVC Controller
 
 In the `simple-application/src/main/java/com/example/demo` directory, create a
-new file called `HelloController.java` next to `DemoApplication.java` file with
+new file called `HelloController.java` next to `SimpleApplication.java` file with
 the following content:
 
 ```java
@@ -58,7 +59,7 @@ Run the project:
 
 ```bash
 cd simple-application
-./mvnw clean package
+./mvnw clean package -DskipTests
 java -jar target/demo-0.0.1-SNAPSHOT.jar &
 cd ..
 ```
@@ -116,6 +117,7 @@ Register the `Microsoft.App` and `Microsoft.OperationalInsights` namespaces if t
 ```bash
 az provider register --namespace Microsoft.App
 az provider register --namespace Microsoft.OperationalInsights
+az provider register --namespace Microsoft.ServiceLinker
 ```
 
 Now your Azure CLI setup is complete, you can define the environment variables that are used throughout the following guide.
@@ -139,6 +141,7 @@ This command:
 
 ```bash
 cd simple-application
+./mvnw clean package -DskipTests
 az containerapp up \
     --name $APP_NAME \
     --resource-group $RESOURCE_GROUP \
@@ -191,6 +194,7 @@ curl https://start.spring.io/starter.tgz \
     -d type=maven-project \
     -d dependencies=web \
     -d baseDir=simple-application \
+    -d name=simple-application \
     -d bootVersion=3.2.5 \
     -d javaVersion=17 \
     | tar -xzvf -

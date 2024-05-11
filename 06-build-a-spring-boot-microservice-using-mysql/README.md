@@ -6,106 +6,28 @@ In this section, we'll build another data-driven microservice. This time, we wil
 
 ---
 
-## Configure the MySQL Server instance
-
-After following the steps in Section 00, you should have an Azure Database for MySQL instance named `sclabm-<unique string>` in your resource group.
-
-Before we can use it however, we will need to perform several tasks:
-
-1. Create a MySQL firewall rule to allow connections from our local environment.
-1. Create a MySQL firewall rule to allow connections from Azure Services. This will enable connections from Azure Spring Apps.
-1. Create a MySQL database.
-
-> 💡When prompted for a password, enter the MySQL password you specified when deploying the ARM template in [Section 00](../00-setup-your-environment/README.md).
-
-```bash
-# Obtain the info on the MYSQL server in our resource group:
-export MYSQL_SERVERNAME=$(az mysql server list --query '[0].name' -o tsv)
-export MYSQL_USERNAME="$(az mysql server list --query '[0].administratorLogin' -o tsv)@${MYSQL_SERVERNAME}"
-export MYSQL_HOST="$(az mysql server list --query '[0].fullyQualifiedDomainName' -o tsv)"
-
-# Create a firewall rule to allow connections from your machine:
-export MY_IP=$(curl whatismyip.akamai.com 2>/dev/null)
-az mysql server firewall-rule create \
-    --server-name $MYSQL_SERVERNAME \
-    --name "connect-from-lab" \
-    --start-ip-address "$MY_IP" \
-    --end-ip-address "$MY_IP"
-
-# Create a firewall rule to allow connections from Azure services:
-az mysql server firewall-rule create \
-    --server-name $MYSQL_SERVERNAME \
-    --name "connect-from-azure" \
-    --start-ip-address "0.0.0.0" \
-    --end-ip-address "0.0.0.0"
-
-# Create a MySQL database
-az mysql db create \
-    --name "azure-spring-apps-training" \
-    --server-name $MYSQL_SERVERNAME
-
-# Display MySQL username (to be used in the next section)
-echo "Your MySQL username is: ${MYSQL_USERNAME}"
-
-```
-
-## Connect the MySQL database to the application
-
-As we did for Cosmos DB in the previous section, create a Service Connector for the MySQL database to make it available to the `weather-service` microservice.
-In the [Azure Portal](https://portal.azure.com/?WT.mc_id=java-0000-judubois):
-
-- Navigate to your Azure Spring Apps instance
-- Click on `Apps`
-- Click on `weather-service`.
-- Click on `Service Connector` and then on `+ Create`.
-- Populate the Service Connector fields as shown:
-  - For Service type, select `DB for MySQL single server`
-  - Specify a connection name, e.g. "weatherdb"
-  - Verify the correct subscription is shown
-  - Choose the MySQL server created in the preceding steps
-  - Select the MySQL database created earlier
-  - Select `SpringBoot` as the Client type
-  - Click the `Next: Authentication` button
-
-![MySQL Service Connector, 1 of 5](media/01-create-service-connector-mysql.png)
-
-- Verify `Connection string` is selected
-- Select `Continue with...Database credentials` and fill in Username and Password
-  - The Username was echoed to the terminal as the last command executed earlier
-  - The password is the one you specified in section 0. The default value is `super$ecr3t`.
-- Expand `Advanced` to visually inspect the injected Spring Data properties (optional)
-
-![MySQL Service Connector, 2 of 5](media/02-create-service-connector-mysql.png)
-
-- Review the properties automatically injected by the Service Connector to the `weather-service`
-- Click `Next: Networking`
-
-![MySQL Service Connector, 3 of 5](media/03-create-service-connector-mysql.png)
-
-- Verify that `Configure firewall rules to enable access to target service` is selected
-- Click on `Next: Review + Create`
-
-![MySQL Service Connector, 4 of 5](media/04-create-service-connector-mysql.png)
-
-- After receiving the "Validation passed" message, click the `Create` button to create the Service Connector
-
-![MySQL Service Connector, 5 of 5](media/05-create-service-connector-mysql.png)
-
 ## Create a Spring Boot microservice
 
-Now that we've provisioned the Azure Spring Apps instance and configured the Service Connector, let's get the code for `weather-service` ready. The microservice that we create in this guide is [available here](weather-service/).
+Firstly, let's get the code for `weather-service` ready. The microservice that we create in this guide is [available here](weather-service/).
 
 To create our microservice, we will invoke the Spring Initalizr service from the command line:
 
 ```bash
-curl https://start.spring.io/starter.tgz -d type=maven-project -d dependencies=web,data-jpa,mysql,cloud-eureka,cloud-config-client -d baseDir=weather-service -d bootVersion=3.1.3 -d javaVersion=17 | tar -xzvf -
+curl https://start.spring.io/starter.tgz \
+    -d type=maven-project \
+    -d dependencies=web,data-jpa,mysql,cloud-eureka,cloud-config-client \
+    -d baseDir=weather-service \
+    -d name=weather-service \
+    -d bootVersion=3.2.5 \
+    -d javaVersion=17 \
+    | tar -xzvf -
 ```
 
 > We use the `Spring Web`, `Spring Data JPA`, `MySQL Driver`, `Eureka Discovery Client` and the `Config Client` components.
 
 ## Add Spring code to get the data from the database
 
-Next to the `DemoApplication` class, create a `Weather` JPA entity:
+Next to the `WeatherServiceApplication` class, create a `Weather` JPA entity:
 
 ```java
 package com.example.demo;
@@ -197,34 +119,78 @@ spring.jpa.hibernate.ddl-auto=create
 Then, in order to have Spring Boot add sample data at startup, create a `src/main/resources/import.sql` file and add:
 
 ```sql
-INSERT INTO `azure-spring-apps-training`.`weather` (`city`, `description`, `icon`) VALUES ('Paris, France', 'Very cloudy!', 'weather-fog');
-INSERT INTO `azure-spring-apps-training`.`weather` (`city`, `description`, `icon`) VALUES ('London, UK', 'Quite cloudy', 'weather-pouring');
+INSERT INTO `java-on-aca-db`.`weather` (`city`, `description`, `icon`) VALUES ('Paris, France', 'Very cloudy!', 'weather-fog');
+INSERT INTO `java-on-aca-db`.`weather` (`city`, `description`, `icon`) VALUES ('London, UK', 'Quite cloudy', 'weather-pouring');
 ```
 
 > The icons we are using are the ones from [https://materialdesignicons.com/](https://materialdesignicons.com/) - you can pick their other weather icons if you wish.
 
 ## Deploy the application
 
-You can now build your "weather-service" project and send it to Azure Spring Apps:
+You can now build your "weather-service" project and send it to Azure Container Apps:
 
 ```bash
 cd weather-service
 ./mvnw clean package -DskipTests
-az spring app deploy -n weather-service --artifact-path target/demo-0.0.1-SNAPSHOT.jar
+az containerapp create \
+    --name weather-service \
+    --resource-group $RESOURCE_GROUP \
+    --environment $ENVIRONMENT \
+    --artifact ./target/demo-0.0.1-SNAPSHOT.jar \
+    --min-replicas 1 \
+    --ingress external \
+    --bind $CONFIG_SERVER_NAME $EUREKA_SERVER_NAME \
+    --target-port 8080 \
+    --query properties.configuration.ingress.fqdn
 cd ..
 ```
 
+## Connect the MySQL database to the application
+
+As we did for Cosmos DB in the previous section, create a Service Connector for the MySQL database to make it available to the `weather-service` microservice.
+In the [Azure Portal](https://portal.azure.com):
+
+- Navigate to your container app `weather-service`
+    - The container app will show with some issues like "weather-service Container Crashing". That is because we haven't configure the MySQL connection for it. So let's ignore the issue now and move forward.
+- Select `Service Connector (preview)` from the left table of contents, and then on `+ Create`
+- Populate the Service Connector fields as shown:
+  - For Service type, select `DB for MySQL flexible server`
+  - Specify a connection name, e.g. "mysql_weather"
+  - Verify the correct subscription is shown
+  - Choose the MySQL server created in the preceding steps
+  - Select the MySQL database created earlier
+  - Select `SpringBoot` as the Client type
+  - Click the `Next: Authentication` button
+
+![MySQL Service Connector, 1 of 4](media/01-create-service-connector-mysql.png)
+
+- Select `Connection string`
+- Select `Continue with...Database credentials` and fill in Username and Password
+  - The Username is `sqlAdmin`.
+  - The password is the one you specified in section 00. The default value is `super$ecr3t`.
+- Expand the `Advanced` tag below to verify the property names injected into the connected app (Optional)
+- Click `Next: Networking`
+
+![MySQL Service Connector, 2 of 4](media/02-create-service-connector-mysql.png)
+
+- Verify that `Configure firewall rules to enable access to target service` is selected
+- Click on `Next: Review + Create`
+
+![MySQL Service Connector, 3 of 4](media/03-create-service-connector-mysql.png)
+
+- After receiving the "Validation passed" message, click the `Create` button to create the Service Connector
+
+![MySQL Service Connector, 4 of 4](media/04-create-service-connector-mysql.png)
+
 ## Test the project in the cloud
 
-- Go to "Apps" in your Azure Spring Apps instance.
-  - Verify that `weather-service` has a `Registration status` which says `1/1`. This shows that it is correctly registered in the Spring Cloud Service Registry.
-  - Select `weather-service` to have more information on the microservice.
-- Copy/paste the "Test endpoint" that is provided.
+- Go to your container app `city-service`
+- Find the "Application Url" in the "Essentials" section
 
-You can now use cURL to test the `/weather/city` endpoint. For example, to test for `Paris, France` city, append to the end of the test endpoint: `/weather/city?name=Paris%2C%20France`.
+You can now use `curl` to test the `/weather/city` endpoint. For example, to test for `Paris, France` city, append to the end of the test endpoint: `/weather/city?name=Paris%2C%20France`.
 
 ```bash
-curl "https://primary:31SifNyr649htxU3IEpYaLbxRz6Gy3xAk0aLDFM49hcwx9zcCEXvPEGkHSpzJzKv@judubois-4876.test.azuremicroservices.io/weather-service/default/weather/city?name=Paris%2C%20France"
+curl https://weather-service.victorioussky-9afe1793.canadacentral.azurecontainerapps.io/weather/city?name=Paris%2C%20France
 ```
 
 Here is the response you should receive:
@@ -237,6 +203,6 @@ If you need to check your code, the final project is available in the ["weather-
 
 ---
 
-⬅️ Previous guide: [06 - Build a reactive Spring Boot microservice using Cosmos DB](../06-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
+⬅️ Previous guide: [05 - Build a reactive Spring Boot microservice using Cosmos DB](../05-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
 
-➡️ Next guide: [08 - Build a Spring Cloud Gateway](../08-build-a-spring-cloud-gateway/README.md)
+➡️ Next guide: [07 - Build a Spring Cloud Gateway](../07-build-a-spring-cloud-gateway/README.md)

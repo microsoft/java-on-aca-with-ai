@@ -42,6 +42,7 @@ curl https://start.spring.io/starter.tgz \
     -d type=maven-project \
     -d dependencies=webflux,cloud-eureka,cloud-config-client \
     -d baseDir=city-service \
+    -d name=city-service \
     -d bootVersion=3.2.5 \
     -d javaVersion=17 \
     | tar -xzvf -
@@ -63,7 +64,7 @@ In the application's `pom.xml` file, add the Azure Cosmos DB dependency just aft
 
 ## Add Spring reactive code to get the data from the database
 
-Next to the `DemoApplication` class, create a `City` domain object:
+Next to the `CityServiceApplication` class, create a `City` domain object:
 
 ```java
 package com.example.demo;
@@ -149,6 +150,7 @@ az containerapp create \
     --resource-group $RESOURCE_GROUP \
     --environment $ENVIRONMENT \
     --artifact ./target/demo-0.0.1-SNAPSHOT.jar \
+    --min-replicas 1 \
     --ingress external \
     --bind $CONFIG_SERVER_NAME $EUREKA_SERVER_NAME \
     --target-port 8080
@@ -172,7 +174,7 @@ Azure Container Apps can automatically connect the Cosmos DB database we created
 ![Connect to Cosmos DB database 1 of 4](media/02-service-connector-cosmos.png)
 
 - Select `Connection string` for the authentication type
-- Expand the `Advanced` tag below to verify the property names injected into the connected app
+- Expand the `Advanced` tag below to verify the property names injected into the connected app (Optional)
 - Click the `Next: Networking` button
 
 ![Connect to Cosmos DB database 2 of 4](media/03-service-connector-cosmos.png)
@@ -203,4 +205,4 @@ If you need to check your code, the final project is available in the ["city-ser
 
 ⬅️ Previous guide: [04 - Build a Spring Boot microservice using Spring Cloud features](../04-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
 
-➡️ Next guide: 
+➡️ Next guide: [06 - Build a Spring Boot microservice using MySQL](../06-build-a-spring-boot-microservice-using-mysql/README.md)

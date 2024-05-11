@@ -27,6 +27,7 @@ curl https://start.spring.io/starter.tgz \
     -d type=maven-project \
     -d dependencies=web,cloud-eureka,cloud-config-client \
     -d baseDir=spring-cloud-microservice \
+    -d name=spring-cloud-microservice \
     -d bootVersion=3.2.5 \
     -d javaVersion=17 \
     | tar -xzvf -
@@ -36,7 +37,7 @@ curl https://start.spring.io/starter.tgz \
 
 ## Add a new Spring MVC Controller
 
-Next to the DemoApplication class, create a new class called `HelloController` with the following content:
+Next to the `SpringCloudMicroserviceApplication` class, create a new class called `HelloController` with the following content:
 
 ```java
 package com.example.demo;
@@ -103,12 +104,13 @@ As in [01 - Build a simple Java application](../01-build-a-simple-java-applicati
 
 ```bash
 cd spring-cloud-microservice
-az containerapp up \
+./mvnw clean package
+az containerapp create \
     --name spring-cloud-microservice \
     --resource-group $RESOURCE_GROUP \
-    --location $LOCATION \
     --environment $ENVIRONMENT \
     --artifact ./target/demo-0.0.1-SNAPSHOT.jar \
+    --min-replicas 1 \
     --ingress external \
     --target-port 8080
 cd ..
