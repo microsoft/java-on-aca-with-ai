@@ -1,0 +1,164 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location" : {
+            "type" : "string",
+            "defaultValue" : "[resourceGroup().location]"
+        },
+        "db_for_mysql_name": {
+            "defaultValue": "[concat('javalab-mysql-', uniqueString(resourceGroup().id))]",
+            "type": "string"
+        },
+        "cosmosdb_account_name": {
+            "defaultValue": "[concat('javalab-cosmos-', uniqueString(resourceGroup().id))]",
+            "type": "string"
+        },
+        "mysql_admin_password": {
+            "type" :"securestring",
+            "defaultValue": "super$ecr3t",
+            "metadata" :{
+                "description" : "The administrator password for the MySQL instance"
+            }
+        }
+    },
+    "resources": [
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers",
+            "apiVersion": "2021-05-01",
+            "name": "[parameters('db_for_mysql_name')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_B1ms",
+                "tier": "Burstable"
+            },
+            "properties": {
+                "administratorLogin" : "sqlAdmin",
+                "administratorLoginPassword" : "[parameters('mysql_admin_password')]",
+                "storageProfile": {
+                    "storageMB": 5120,
+                    "backupRetentionDays": 7,
+                    "geoRedundantBackup": "Disabled",
+                    "storageAutoGrow": "Enabled"
+                },
+                "version": "8.0.21",
+                "sslEnforcement": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/firewallRules",
+            "apiVersion": "2021-05-01",
+            "name": "[concat(parameters('db_for_mysql_name'), '/AllowAllAzureServicesAndResourcesWithinAzureIps')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('db_for_mysql_name'))]"
+            ],
+            "properties": {
+                "startIpAddress": "0.0.0.0",
+                "endIpAddress": "0.0.0.0"
+            }
+        },
+        {
+            "type": "Microsoft.DBforMySQL/flexibleServers/databases",
+            "apiVersion": "2021-05-01",
+            "name": "[concat(parameters('db_for_mysql_name'), '/java-on-aca-db')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DBforMySQL/flexibleServers', parameters('db_for_mysql_name'))]"
+            ],
+            "properties": {
+                "charset": "utf8mb4",
+                "collation": "utf8mb4_general_ci"
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2019-08-01",
+            "name": "[parameters('cosmosdb_account_name')]",
+            "location": "[parameters('location')]",
+            "tags": {
+                "defaultExperience": "Core (SQL)",
+                "hidden-cosmos-mmspecial": ""
+            },
+            "kind": "GlobalDocumentDB",
+            "properties": {
+                "enableAutomaticFailover": false,
+                "enableMultipleWriteLocations": false,
+                "isVirtualNetworkFilterEnabled": false,
+                "virtualNetworkRules": [
+                ],
+                "disableKeyBasedMetadataWriteAccess": false,
+                "databaseAccountOfferType": "Standard",
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "Session",
+                    "maxIntervalInSeconds": 5,
+                    "maxStalenessPrefix": 100
+                },
+                "locations": [
+                    {
+                        "locationName": "[parameters('location')]",
+                        "provisioningState": "Succeeded",
+                        "failoverPriority": 0,
+                        "isZoneRedundant": false
+                    }
+                ],
+                "capabilities": [
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases",
+            "apiVersion": "2019-08-01",
+            "name": "[concat(parameters('cosmosdb_account_name'), '/java-on-aca-cosmosdb')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosdb_account_name'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "java-on-aca-cosmosdb"
+                },
+                "options": {
+                    "throughput" : "400"
+                }
+            }
+        },
+        {
+            "type": "Microsoft.DocumentDB/databaseAccounts/sqlDatabases/containers",
+            "apiVersion": "2019-08-01",
+            "name": "[concat(parameters('cosmosdb_account_name'), '/java-on-aca-cosmosdb/City')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts/sqlDatabases', parameters('cosmosdb_account_name'), 'java-on-aca-cosmosdb')]",
+                "[resourceId('Microsoft.DocumentDB/databaseAccounts', parameters('cosmosdb_account_name'))]"
+            ],
+            "properties": {
+                "resource": {
+                    "id": "City",
+                    "indexingPolicy": {
+                        "indexingMode": "Consistent",
+                        "automatic": true,
+                        "includedPaths": [
+                            {
+                                "path": "/*"
+                            }
+                        ],
+                        "excludedPaths": [
+                            {
+                                "path": "/\"_etag\"/?"
+                            }
+                        ]
+                    },
+                    "partitionKey": {
+                        "paths": [
+                            "/name"
+                        ],
+                        "kind": "Hash"
+                    },
+                    "conflictResolutionPolicy": {
+                        "mode": "LastWriterWins",
+                        "conflictResolutionPath": "/_ts"
+                    }
+                },
+                "options": {
+                }
+            }
+        }
+    ]
+}

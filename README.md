@@ -1,28 +1,54 @@
-# Project
+# Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+## What you should expect
 
-As the maintainer of this project, please make a few updates:
+This is not the official documentation but an opinionated workshop.
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+It is a hands-on training, and it will use the command line extensively. The idea is to get coding very quickly and play with the platform, from a simple demo to far more complex examples.
 
-## Contributing
+After completing all the guides, you should have a fairly good understanding of everything that Java on Azure Container Apps offers.
 
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
+## [00 - Prerequisites and Setup](00-setup-your-environment/README.md)
 
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
+Prerequisites and environment setup.
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
+## [01 - Build a simple Java application](01-build-a-simple-java-application/README.md)
+
+Build the simplest possible Java application using the Spring Initializr.
+
+## [02 - Create Managed Eureka Server for Spring](02-create-managed-eureka-server-for-spring/README.md)
+
+Create a [Spring Cloud Eureka Server](https://spring.io/projects/spring-cloud-netflix), that will be entirely managed and supported by Azure Container Apps, to be used by Spring Boot microservices.
+
+## [03 - Create and configure Managed Config Server for Spring](03-create-and-configure-managed-config-server-for-spring/README.md)
+
+Create a managed [Spring Cloud Config Server](https://cloud.spring.io/spring-cloud-config) and configure it to access Git repository.
+
+## [04 - Build a Spring Boot microservice using Spring Cloud features](04-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
+
+Build a Spring Boot microservice that is cloud-enabled: it uses a [Spring Cloud Eureka Server](https://spring.io/projects/spring-cloud-netflix) and a [Spring Cloud Config Server](https://cloud.spring.io/spring-cloud-config) which are both managed and supported by Azure Container Apps.
+
+## [05 - Build a reactive Spring Boot microservice using Cosmos DB](05-build-a-reactive-spring-boot-microservice-using-cosmosdb/README.md)
+
+Build a reactive Spring Boot microservice, that uses the [Spring reactive stack](https://docs.spring.io/spring/docs/current/spring-framework-reference/web-reactive.html) and is bound to a [Cosmos DB database](https://docs.microsoft.com/en-us/azure/cosmos-db/) in order to access a globally-distributed database with optimum performance.
+
+## [06 - Build a Spring Boot microservice using MySQL](06-build-a-spring-boot-microservice-using-mysql/README.md)
+
+Build a classical Spring Boot application that uses JPA to access a [MySQL database managed by Azure](https://docs.microsoft.com/en-us/azure/mysql/).
+
+## [07 - Build a Spring Cloud Gateway](07-build-a-spring-cloud-gateway/README.md)
+
+Build a [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway) to route HTTP requests to the correct Spring Boot microservices.
+
+## [08 - Putting it all together, a complete microservice stack](08-putting-it-all-together-a-complete-microservice-stack/README.md)
+
+Use a front-end to access graphically our complete microservice stack.
+
+## [09 - Build a Spring AI application using Azure OpenAI](09-build-a-spring-ai-application-using-azure-openai/README.md)
+
+Build an AI application that uses [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/) in order to analyze and forecast weather based on historical data.
+
+---
 
 ## Trademarks
 
