@@ -1,4 +1,4 @@
-# 08 - Build a Spring Cloud Gateway
+# 07 - Build a Spring Cloud Gateway
 
 __This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
