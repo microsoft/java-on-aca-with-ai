@@ -81,4 +81,4 @@ If you need to check your code, the final project is available in the ["gateway"
 
 ⬅️ Previous guide: [06 - Build a Spring Boot microservice using MySQL](../06-build-a-spring-boot-microservice-using-mysql/README.md)
 
-➡️ Next guide: [09 - Putting it all together, a complete microservice stack](../09-putting-it-all-together-a-complete-microservice-stack/README.md)
+➡️ Next guide: [08 - Putting it all together, a complete microservice stack](../08-putting-it-all-together-a-complete-microservice-stack/README.md)

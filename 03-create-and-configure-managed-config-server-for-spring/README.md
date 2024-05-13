@@ -6,8 +6,6 @@ Another key feature of cloud-native applications is *externalized configuration*
 
 ---
 
-> 💡 If your organization uses Azure Repos as your source code repository, see [Using Azure Repos for configuration](AzureReposForConfig.md)
-
 > ⏱ If you want to skip the step of creating a private repository, you can use this public repository instead: [https://github.com/Azure-Samples/java-on-aca-sample-public-config.git](https://github.com/Azure-Samples/java-on-aca-sample-public-config.git). __Storing configuration in a public repository is not recommended in real-world deployments.__ We offer this public repository only as a shortcut for this workshop, for example if you don't have a GitHub account.
 >
 > To use this shortcut:
@@ -104,6 +102,6 @@ In the next section, we will create an application that consumes this configurat
 
 ---
 
-⬅️ Previous guide: [02 - Create Managed Eureka Server for Spring](../02-create-and-configure-managed-eureka-server-for-spring/README.md)
+⬅️ Previous guide: [02 - Create Managed Eureka Server for Spring](../02-create-managed-eureka-server-for-spring/README.md)
 
 ➡️ Next guide: [04 - Build a Spring Boot microservice using Spring Cloud features](../04-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)

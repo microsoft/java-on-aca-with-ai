@@ -228,4 +228,6 @@ cd ..
 
 ---
 
+⬅️ Previous guide: [00 - Setup your environment](../00-setup-your-environment/README.md)
+
 ➡️ Next guide: [02 - Create Managed Eureka Server for Spring](../02-create-managed-eureka-server-for-spring/README.md)

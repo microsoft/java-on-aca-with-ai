@@ -32,10 +32,10 @@ az containerapp create \
     --target-port 80
 ```
 
-After created, find it "Application Url" and open in your browser. The "Spring Cloud Gateway URL" is automatically populated with your gateway address. Click on "Go" and you should see the following screen:
+After created, find its "Application Url" and open it in your browser. The "Spring Cloud Gateway URL" is automatically populated with your gateway address. Click on "Go" and you should see the following screen:
 
 ![VueJS front-end](media/01-vuejs-frontend.png)
 
 ⬅️ Previous guide: [07 - Build a Spring Cloud Gateway](../07-build-a-spring-cloud-gateway/README.md)
 
-➡️ Next guide: 
+➡️ Next guide: [09 - Build a Spring AI application using Azure OpenAI](../09-build-a-spring-ai-application-using-azure-openai/README.md)
