@@ -20,7 +20,7 @@ To save time, we provide an ARM template for creating all the Azure resources yo
 
 > ⏱ The resource provisioning will take some time. __Do not wait!__ Continue with the workshop.
 
-> 💡 If the "Deploy to Azure" button above doesn't work, you can try to directly open https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json in your browser, or follow [Create and deploy ARM templates by using the Azure portal](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-the-portal?source=recommendations) to deploy the [azuredeploy.json](azuredeploy.json) file.
+> 💡 If the "Deploy to Azure" button above doesn't work, you can try to directly open [https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/microsoft/java-on-aca-with-ai/main/00-setup-your-environment/azuredeploy.json](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json) in your browser, or follow [Create and deploy ARM templates by using the Azure portal](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-the-portal?source=recommendations) to deploy the [azuredeploy.json](azuredeploy.json) file.
 
 ## Prerequisites
 
