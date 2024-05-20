@@ -27,7 +27,7 @@ az containerapp create \
     --name weather-app \
     --resource-group $RESOURCE_GROUP \
     --environment $ENVIRONMENT \
-    --image javaonacalab.azurecr.io/samples/weather-app:latest \
+    --image mcr.microsoft.com/javaaccelerator/samples/weather-app:latest \
     --ingress external \
     --target-port 80
 ```

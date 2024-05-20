@@ -30,29 +30,29 @@ az cognitiveservices account create \
     --sku s0
 ```
 
-Deploy a `gpt-4` model in your Azure OpenAI resource:
+Deploy a `gpt-35-turbo-16k` model in your Azure OpenAI resource:
 
 ```bash
 az cognitiveservices account deployment create \
     --name $AZURE_OPENAI_NAME \
     --resource-group $RESOURCE_GROUP \
-    --deployment-name gpt-4 \
-    --model-name gpt-4 \
-    --model-version "0125-Preview" \
+    --deployment-name gpt-35-turbo-16k \
+    --model-name gpt-35-turbo-16k \
+    --model-version "0613" \
     --model-format OpenAI \
     --sku Standard \
     --capacity 10
 ```
 
-> If you not able to create a `gpt-4` model for any reason, alternatively you can create a `gpt-35-turbo-16k` model by the following command:
+> Alternatively you can create a `gpt-4` model by the following command:
 >
 > ```bash
 > az cognitiveservices account deployment create \
 >     --name $AZURE_OPENAI_NAME \
 >     --resource-group $RESOURCE_GROUP \
->     --deployment-name gpt-35-turbo-16k \
->     --model-name gpt-35-turbo-16k \
->     --model-version "0613" \
+>     --deployment-name gpt-4 \
+>     --model-name gpt-4 \
+>     --model-version "0125-Preview" \
 >     --model-format OpenAI \
 >     --sku Standard \
 >     --capacity 10
@@ -163,11 +163,11 @@ Create a `Paris.csv` file under `src/main/resources/static/` to store historical
 Then, add the following properties in `src/main/resources/application.properties` to configure the [Spring AI Azure OpenAI Chat properties](https://docs.spring.io/spring-ai/reference/api/clients/azure-openai-chat.html#_chat_properties).
 
 ```properties
-spring.ai.azure.openai.chat.options.deployment-name=gpt-4
+spring.ai.azure.openai.chat.options.deployment-name=gpt-35-turbo-16k
 spring.ai.azure.openai.chat.options.temperature=0
 ```
 
-> If you created `gpt-35-turbo-16k` model in previous step, please configure to be `spring.ai.azure.openai.chat.options.deployment-name=gpt-35-turbo-16k` here.
+> If you created `gpt-4` model in previous step, please configure to be `spring.ai.azure.openai.chat.options.deployment-name=gpt-4` here.
 
 Finally, let's add a `index.html` file under `src/main/resources/static/` to make the interaction more friendly. You can directly copy the content from [here](ai-weather-application/src/main/resources/static/index.html).
 

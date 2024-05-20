@@ -8,7 +8,7 @@ In this section, we'll set up everything you need to expeditiously complete the 
 
 ## Creating Azure Resources
 
-To save time, we provide an ARM template for creating all the Azure resources you will need for this lab other than the Azure Container Apps itself. Use the Deploy to Azure button below.
+To save time, we provide an ARM template for creating all the Azure resources you will need for this lab other than the Azure Container Apps itself. Use the "Deploy to Azure" button below.
 
 > 💡 Use the following settings for deploying the Azure Template:
 >
@@ -18,7 +18,9 @@ To save time, we provide an ARM template for creating all the Azure resources yo
 
 [![Deploy to Azure](media/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json)
 
->⏱ The resource provisioning will take some time. __Do not wait!__ Continue with the workshop.
+> ⏱ The resource provisioning will take some time. __Do not wait!__ Continue with the workshop.
+
+> 💡 If the "Deploy to Azure" button above doesn't work, you can try to directly open https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json in your browser, or follow [Create and deploy ARM templates by using the Azure portal](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-the-portal?source=recommendations) to deploy the [azuredeploy.json](azuredeploy.json) file.
 
 ## Prerequisites
 
