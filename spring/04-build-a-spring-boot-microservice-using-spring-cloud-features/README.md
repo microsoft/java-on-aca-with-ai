@@ -12,7 +12,7 @@ This guide builds upon the previous guides: we are going to build again a simple
 
 - It will be connected to a Spring Cloud Service Registry so it can discover other microservices, as well as being discovered itself!
 
-- It will get its configuration from the Spring Cloud Config server that we configured in the previous guide, [02 - Create and configure Managed Config Server for Spring](../02-create-and-configure-managed-config-server-for-spring/README.md)
+- It will get its configuration from the Spring Cloud Config server that we configured in the previous guide, [03 - Create and configure Managed Config Server for Spring](../03-create-and-configure-managed-config-server-for-spring/README.md)
 
 For both features, it will just be a matter of adding an official Spring Boot starter, and Azure Container Apps and its Java Components will take care of everything else.
 
@@ -156,7 +156,7 @@ You should see the console output of `spring-cloud-microservice` scroll by on yo
 
 ![Console output](media/02-console-output.png)
 
-From the console output, you can see that the application is successfully registered to the Managed Eureka Server from [02 - Create Managed Eureka Server for Spring](../02-create-and-configure-managed-eureka-server-for-spring/README.md).
+From the console output, you can see that the application is successfully registered to the Managed Eureka Server from [02 - Create Managed Eureka Server for Spring](../02-create-managed-eureka-server-for-spring/README.md).
 
 ## Query application logs
 

@@ -16,7 +16,7 @@ Another key feature of cloud-native applications is *externalized configuration*
 >     ```
 >  2. Create the Managed Config Server for Spring and set its configuration source as the public Git repository.
 >     ```bash
->     az containerapp env java-component spring-cloud-config create \
+>     az containerapp env java-component config-server-for-spring create \
 >         --environment $ENVIRONMENT \
 >         --resource-group $RESOURCE_GROUP \
 >         --name $CONFIG_SERVER_NAME \
@@ -24,7 +24,7 @@ Another key feature of cloud-native applications is *externalized configuration*
 >     ```
 >  
 >  We have enabled Azure Container Apps to create a Managed Config Server for Spring, with the configuration files from the public repository. You can now proceed to the next guide: 
->  ➡ [03 - Build a Spring Boot microservice using Spring Cloud features](../03-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
+>  ➡ [04 - Build a Spring Boot microservice using Spring Cloud features](../04-build-a-spring-boot-microservice-using-spring-cloud-features/README.md)
 
 ## Create a Git repository for storing the application configuration
 
@@ -85,7 +85,7 @@ GIT_PAT="Change to the personal access token we created in the previous section"
 Create the Managed Config Server and set its configuration source as your Git repository.
 
 ```bash
-az containerapp env java-component spring-cloud-config create \
+az containerapp env java-component config-server-for-spring create \
     --environment $ENVIRONMENT \
     --resource-group $RESOURCE_GROUP \
     --name $CONFIG_SERVER_NAME \

@@ -17,7 +17,7 @@ EUREKA_SERVER_NAME="eurekaserver01"
 Create the Managed Eureka Server.
 
 ```bash
-az containerapp env java-component spring-cloud-eureka create \
+az containerapp env java-component eureka-server-for-spring create \
   --environment $ENVIRONMENT \
   --resource-group $RESOURCE_GROUP \
   --name $EUREKA_SERVER_NAME
