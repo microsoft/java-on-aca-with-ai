@@ -1,6 +1,6 @@
 # 01 - Build a simple Java application
 
-__This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
+__This guide is part of the [Build, Run and Monitor Intelligent Spring Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
 In this section, we'll build a simple Java application and deploy it to Azure Container Apps. This will give us a starting point for adding advanced technologies in later sections.
 

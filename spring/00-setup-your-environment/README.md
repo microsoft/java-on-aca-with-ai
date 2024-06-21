@@ -1,6 +1,6 @@
 # 00 - Setup your environment
 
-__This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
+__This guide is part of the [Build, Run and Monitor Intelligent Spring Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
 In this section, we'll set up everything you need to expeditiously complete the lab.
 
@@ -16,11 +16,11 @@ To save time, we provide an ARM template for creating all the Azure resources yo
 > * In the location field, select the nearest region from [the list of regions where Azure Container Apps is available](https://azure.microsoft.com/global-infrastructure/services/?products=container-apps&regions=all).
 > * Save the MySQL password you specify in this step. You will need it in section 6. If you don't set one, it will be `super$ecr3t`.
 
-[![Deploy to Azure](media/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json)
+[![Deploy to Azure](media/deploybutton.svg)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2Fspring%2F00-setup-your-environment%2Fazuredeploy.json)
 
 > ⏱ The resource provisioning will take some time. __Do not wait!__ Continue with the workshop.
 
-> 💡 If the "Deploy to Azure" button above doesn't work, you can try to directly open [https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/microsoft/java-on-aca-with-ai/main/00-setup-your-environment/azuredeploy.json](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2F00-setup-your-environment%2Fazuredeploy.json) in your browser, or follow [Create and deploy ARM templates by using the Azure portal](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-the-portal?source=recommendations) to deploy the [azuredeploy.json](azuredeploy.json) file.
+> 💡 If the "Deploy to Azure" button above doesn't work, you can try to directly open [https://portal.azure.com/#create/Microsoft.Template/uri/https://raw.githubusercontent.com/microsoft/java-on-aca-with-ai/main/spring/00-setup-your-environment/azuredeploy.json](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fmicrosoft%2Fjava-on-aca-with-ai%2Fmain%2Fspring%2F00-setup-your-environment%2Fazuredeploy.json) in your browser, or follow [Create and deploy ARM templates by using the Azure portal](https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-the-portal?source=recommendations) to deploy the [azuredeploy.json](azuredeploy.json) file.
 
 ## Prerequisites
 
@@ -39,7 +39,7 @@ This training lab requires the following to be installed on your machine:
 
 > 💡 If you try the command above and you see the error `bash: az: command not found`, run the following command: `alias az='az.cmd'` and try again.
 
-* 🚧 The `containerapp` extension for Azure CLI. You can install or update this extension after installing Azure CLI by running `az extension add --name containerapp --upgrade`.
+* 🚧 The `containerapp` extension for Azure CLI. You can install or update this extension after installing Azure CLI by running `az extension add --name containerapp --upgrade --allow-preview true`.
 
 > 💡 In some sections, you will access the UI of the Microservice applications in a web browser. Use the [Microsoft Edge](https://microsoft.com/edge), Google Chrome, or Firefox for these sections.
 

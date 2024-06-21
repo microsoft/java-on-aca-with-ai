@@ -1,6 +1,6 @@
 # 09 - Build a Spring AI application using Azure OpenAI
 
-__This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
+__This guide is part of the [Build, Run and Monitor Intelligent Spring Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
 In this section, we'll build an AI application that uses [Azure OpenAI Service](https://learn.microsoft.com/en-us/azure/ai-services/openai/) in order to analyze and forecast weather based on historical data.
 
@@ -62,12 +62,12 @@ Retrieve the endpoint and key of your Azure OpenAI resource, and store them in e
 
 ```bash
 AZURE_OPENAI_ENDPOINT=$(az cognitiveservices account show \
-    --name $OPENAI_RESOURCE_NAME \
+    --name $AZURE_OPENAI_NAME \
     --resource-group $RESOURCE_GROUP \
     --query properties.endpoint \
     --output tsv)
 AZURE_OPENAI_KEY=$(az cognitiveservices account keys list \
-    --name $OPENAI_RESOURCE_NAME \
+    --name $AZURE_OPENAI_NAME \
     --resource-group $RESOURCE_GROUP \
     --query key1 \
     --output tsv)

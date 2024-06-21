@@ -1,6 +1,6 @@
 # 06 - Build a Spring Boot microservice using MySQL
 
-__This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
+__This guide is part of the [Build, Run and Monitor Intelligent Spring Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
 In this section, we'll build another data-driven microservice. This time, we will use a relational database, a [MySQL database managed by Azure](https://docs.microsoft.com/en-us/azure/mysql). And we'll use Java Persistence API (JPA) to access the data in a way that is more frequently used in the Java ecosystem.
 

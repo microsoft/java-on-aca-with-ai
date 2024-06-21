@@ -1,6 +1,6 @@
 # 02 - Create Managed Eureka Server for Spring
 
-__This guide is part of the [Build, Run and Monitor Intelligent Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
+__This guide is part of the [Build, Run and Monitor Intelligent Spring Java Apps on Azure Container Apps and Azure OpenAI](../README.md)__
 
 A key feature of cloud-native application is *service discovery* - the ability to provide a common place to find and identify individual services. In this section, we'll create a [Spring Cloud Eureka Server](https://spring.io/projects/spring-cloud-netflix) to enable this functionality.
 
