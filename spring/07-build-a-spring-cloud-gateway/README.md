@@ -61,7 +61,7 @@ cd ..
 
 ## Test the project in the cloud
 
-- Go to your container app `city-service`
+- Go to your container app `gateway`
 - Find the "Application Url" in the "Essentials" section
 
 As the gateway is connected to the Spring Cloud Eureka Server, it should have automatically opened routes to the available microservices, with URL paths in the form of `/microservice-id/**`. For example:

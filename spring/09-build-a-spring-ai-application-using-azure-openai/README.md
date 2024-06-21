@@ -75,7 +75,7 @@ AZURE_OPENAI_KEY=$(az cognitiveservices account keys list \
 
 ## Create a Spring AI application
 
-The application that we create in this guide is [available here](ai-weather-app/).
+The application that we create in this guide is [available here](ai-weather-application/).
 
 In an __empty__ directory invoke the Spring Initalizr service from the command line:
 

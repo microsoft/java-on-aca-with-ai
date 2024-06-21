@@ -184,7 +184,7 @@ In the [Azure Portal](https://portal.azure.com):
 
 ## Test the project in the cloud
 
-- Go to your container app `city-service`
+- Go to your container app `weather-service`
 - Find the "Application Url" in the "Essentials" section
 
 You can now use `curl` to test the `/weather/city` endpoint. For example, to test for `Paris, France` city, append to the end of the test endpoint: `/weather/city?name=Paris%2C%20France`.

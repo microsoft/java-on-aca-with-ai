@@ -20,7 +20,7 @@ In order to finish this architecture, we need to add a front-end to it:
 - This front-end will be hosted on Azure Container Apps as well, with its own domain name. That's why we enabled CORS in our gateway earlier.
 - If you are familiar with NodeJS and Vue CLI, you can also run this application locally by typing `npm install && vue ui`.
 
-In order to simplify this part, which is not relevant to understanding Java and Spring, we have already containerized the front-end application and put it in `javaonacalab.azurecr.io/samples/weather-app:latest`. You can use it directly.
+In order to simplify this part, which is not relevant to understanding Java and Spring, we have already containerized the front-end application and put it in `mcr.microsoft.com/javaaccelerator/samples/weather-app:latest`. You can use it directly.
 
 ```bash
 az containerapp create \
