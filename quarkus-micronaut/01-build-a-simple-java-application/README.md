@@ -68,9 +68,9 @@ curl http://localhost:8080/hello --silent
 
 Finally, press `Ctrl+C` to stop the application.
 
-### Build and deploy the application on Azure Container Apps
+### Build and deploy Quarkus application on Azure Container Apps
 
-This section shows how to build a native executable, build a Docker image, push it to the Azure Container Registry, and deploy it to the Azure Container Apps.
+This section shows how to build a native Quarkus executable, build a Docker image, push it to the Azure Container Registry, and deploy it to the Azure Container Apps.
 
 ```bash
 # Build and push quarkus-simple-application image to ACR
@@ -171,7 +171,7 @@ curl http://localhost:8080/hello --silent
 
 Finally, press `Ctrl+C` to stop the application.
 
-### Build and deploy the application on Azure Container Apps
+### Build and deploy Micronaut application on Azure Container Apps
 
 This section shows how to deploy `micronaut-simple-application` to the Azure Container Apps with a jar artifact.
 
@@ -199,6 +199,10 @@ APP_URL=https://$(az containerapp show \
 # It should return "Hello from Micronaut REST"
 curl $APP_URL/hello --silent
 ```
+
+## Conclusion
+
+Congratulations, you have deployed your first Java application to Azure Container Apps!
 
 ---
 

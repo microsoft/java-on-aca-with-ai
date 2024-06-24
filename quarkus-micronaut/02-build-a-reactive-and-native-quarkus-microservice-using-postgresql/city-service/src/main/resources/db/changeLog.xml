@@ -1,0 +1,32 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+    <changeSet id="1" author="city-service">
+        <createTable tableName="city">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    
+    <changeSet id="2" author="city-service">
+        <insert tableName="city">
+            <column name="id" value="1" valueNumeric="true"/>
+            <column name="name" value="Paris, France" />
+        </insert>
+    </changeSet>
+    
+    <changeSet id="3" author="city-service">
+        <insert tableName="city">
+            <column name="id" value="2" valueNumeric="true"/>
+            <column name="name" value="London, UK" />
+        </insert>
+    </changeSet>
+</databaseChangeLog>
