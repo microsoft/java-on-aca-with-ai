@@ -8,7 +8,7 @@ Prerequisites and environment setup.
 
 ## [01 - Build a simple Java application](01-build-a-simple-java-application/README.md)
 
-Build the simplest possible Java application using the [Quarkus maven plugin](https://quarkus.io/guides/quarkus-maven-plugin) and Micronault [Micronaut Launch](https://launch.micronaut.io/).
+Build the simplest possible Java application using the [Quarkus maven plugin](https://quarkus.io/guides/quarkus-maven-plugin) and [Micronaut Launch](https://launch.micronaut.io/).
 
 ## [02 - Build a reactive and native Quarkus microservice using PostgreSQL](02-build-a-reactive-and-native-quarkus-microservice-using-postgresql/README.md)
 

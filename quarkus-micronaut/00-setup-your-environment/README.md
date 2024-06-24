@@ -22,7 +22,7 @@ This training lab requires the following to be installed on your machine:
 
 * 💡 In some sections, you will access the UI of the Microservice applications in a web browser. Use the [Microsoft Edge](https://microsoft.com/edge), Google Chrome, or Firefox for these sections.
 
-* The Bash shell. While Azure CLI should behave identically on all environments, shell semantics vary. Therefore, only bash can be used with the commands in this training. To complete this training on Windows, use [Git Bash that accompanies the Windows distribution of Git](https://git-scm.com/download/win) or the [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install).
+* The Bash shell. While Azure CLI should behave identically on all environments, shell semantics vary. Therefore, only bash can be used with the commands in this training. To complete this training on Windows, use [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install).
 
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.61.0 or later. You can check the version of your current Azure CLI installation by running:
 
@@ -229,8 +229,7 @@ resourceId=$(az cognitiveservices account show \
     --name $AZURE_OPENAI_NAME \
     --query id --output tsv | tr -d '\r')
 
-# Note: If you are using Git Bash, you may need to set environment variable MSYS_NO_PATHCONV=1 to avoid path conversion issue, see https://github.com/Azure/azure-cli/blob/main/doc/use_cli_with_git_bash.md#auto-translation-of-resource-ids for more details.
-MSYS_NO_PATHCONV=1 az resource update \
+az resource update \
     --ids ${resourceId} \
     --set properties.networkAcls="{'defaultAction':'Allow', 'ipRules':[],'virtualNetworkRules':[]}"
 ```

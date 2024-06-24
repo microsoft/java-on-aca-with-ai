@@ -24,7 +24,7 @@ mvn io.quarkus.platform:quarkus-maven-plugin:3.11.3:create \
     -DjavaVersion="17"
 ```
 
-The project includes `quarkus-rest` extension, use Java 17, uses `com.example` as group ID and `quarkus-simple-application` as artifact ID.
+The project includes `quarkus-rest` extension, uses Java 17, uses `com.example` as group ID and `quarkus-simple-application` as artifact ID.
 
 ### The Greeting REST resource
 
@@ -107,6 +107,96 @@ APP_URL=https://$(az containerapp show \
     -o tsv)
 
 # It should return "Hello from Quarkus REST"
+curl $APP_URL/hello --silent
+```
+
+## Build a simple Micronaut application
+
+The Micronaut application that we create in this guide is [micronaut-simple-application](micronaut-simple-application).
+
+A typical way to create Micronaut applications is to use the [Micronaut Command Line Interface](https://docs.micronaut.io/latest/guide/#cli) or [Micronaut Launch](https://launch.micronaut.io/). Feel free to explore more outside this training. For the purposes of this training, we will only use the [Micronaut Launch](https://launch.micronaut.io/) to create a simple Micronaut application.
+
+In an __empty__ directory execute the the following commands:
+
+```bash
+curl --location \
+    --request GET 'https://launch.micronaut.io/create/default/com.example.micronaut-simple-application?lang=JAVA&build=MAVEN&test=JUNIT&javaVersion=JDK_17' \
+    --output micronaut-simple-application.zip \
+    && unzip micronaut-simple-application.zip \
+    && rm -rf micronaut-simple-application.zip \
+```
+
+The project uses Java 17, uses Maven as build tool, uses `com.example` as group ID and `micronaut-simple-application` as artifact ID.
+
+### Add a Hello REST controller
+
+After the project is created, run the following command to create a Hello REST controller located in `micronaut-simple-application/src/main/java/com/example/HelloController.java`:
+
+```bash
+cat << EOF > micronaut-simple-application/src/main/java/com/example/HelloController.java
+package example.micronaut;
+
+import io.micronaut.http.MediaType;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Produces;
+
+@Controller("/hello") 
+public class HelloController {
+    @Get 
+    @Produces(MediaType.TEXT_PLAIN) 
+    public String hello() {
+        return "Hello from Micronaut REST"; 
+    }
+}
+EOF
+```
+
+It’s a very simple REST endpoint, returning "Hello from Micronaut REST" to requests on "/hello".
+
+### Test the project locally
+
+Run the project:
+
+```bash
+mvn clean package -f micronaut-simple-application/pom.xml
+java -jar micronaut-simple-application/target/micronaut-simple-application-0.1.jar
+```
+
+Open another terminal and requesting the `/hello` endpoint should return the "Hello from Micronaut REST" message.
+
+```bash
+curl http://localhost:8080/hello --silent
+```
+
+Finally, press `Ctrl+C` to stop the application.
+
+### Build and deploy the application on Azure Container Apps
+
+This section shows how to deploy `micronaut-simple-application` to the Azure Container Apps with a jar artifact.
+
+```bash
+# Deploy micronaut-simple-application to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name micronaut-simple-application \
+    --artifact micronaut-simple-application/target/micronaut-simple-application-0.1.jar \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --ingress 'external' \
+    --min-replicas 1
+```
+
+Invoke `/hello` endpoint exposed by the Azure Container Apps `micronaut-simple-application` and test if it works as expected:
+
+```bash
+APP_URL=https://$(az containerapp show \
+    --name micronaut-simple-application \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --query properties.configuration.ingress.fqdn \
+    -o tsv)
+
+# It should return "Hello from Micronaut REST"
 curl $APP_URL/hello --silent
 ```
 
