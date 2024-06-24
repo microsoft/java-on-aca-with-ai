@@ -51,7 +51,7 @@ The `city-service/src/main/resources/db/changeLog.xml` file contains the Liquiba
 
 ### Quarkus reactive code to get the data from the database
 
-The `city-service/src/main/java/com/example/City.java` is a reactive entity that represents a city in the database:
+The `city-service/src/main/java/com/example/City.java` is a Quarkus reactive Panache entity that represents the `city` table in the database:
 
 ```java
 package com.example;
@@ -142,7 +142,7 @@ It also includes dependencies for connecting to the PostgreSQL database with Hib
     </dependency>
 ```
 
-Finally, there're some required configurations in the `city-service/src/main/resources/application.properties` file:
+The `city-service/src/main/resources/application.properties` file contains the configuration for the Liquibase and OpenTelemetry:
 
 ```properties
 quarkus.liquibase.migrate-at-start=true
@@ -208,7 +208,7 @@ APP_URL=https://$(az containerapp show \
     --query properties.configuration.ingress.fqdn \
     -o tsv)
 
-# It should return "[{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]"
+# You should see the list of cities returned: [{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]
 curl $APP_URL/cities --silent
 ```
 
