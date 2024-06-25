@@ -262,10 +262,11 @@ az cognitiveservices account deployment create \
 
 ## Preparing the code samples
 
-Clone the repository that contains the complete code samples for this lab:
+Clone the repository that contains the complete code samples for this lab, and navigate to the `java-on-aca-with-ai/quarkus-micronaut` directory:
 
 ```bash
 git clone https://github.com/microsoft/java-on-aca-with-ai.git
+cd java-on-aca-with-ai/quarkus-micronaut
 ```
 
 ---

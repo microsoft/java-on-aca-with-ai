@@ -21,11 +21,11 @@ In order to finish this architecture, we need to add a front-end to it:
 
 ## Build and deploy the application on Azure Container Apps
 
-Similar to [Build and deploy Quarkus application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-quarkus-application-on-azure-container-apps), create a specific `weather-app` application in your Azure Container Apps.
+Similar to [Build and deploy Java application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-java-application-on-azure-container-apps), create a specific `weather-app` application in your Azure Container Apps.
 
 ```bash
 # Build and push weather-app image to ACR
-cd java-on-aca-with-ai/quarkus-micronaut/05-putting-it-all-together-a-complete-microservice-stack
+cd 05-putting-it-all-together-a-complete-microservice-stack
 
 docker buildx build --platform linux/amd64 -f weather-app/Dockerfile -t weather-app ./weather-app
 docker tag weather-app ${ACR_LOGIN_SERVER}/weather-app
@@ -46,7 +46,7 @@ az containerapp create \
     --target-port 80 \
     --ingress 'external' \
     --min-replicas 1
-cd ../../..
+cd ..
 ```
 
 ## Test the project in the cloud
@@ -80,7 +80,7 @@ Open the URL http://localhost:8080 in a web browser, you should see a same page 
 
 ![VueJS front-end](media/01-vuejs-frontend.png)
 
-Press `Ctrl+C` to stop the container.
+Switch back to the terminal and press `Ctrl+C` to stop the container.
 
 ## Monitor microservices with Application Insights
 

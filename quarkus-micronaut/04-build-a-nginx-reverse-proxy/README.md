@@ -101,11 +101,11 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ## Build and deploy the application on Azure Container Apps
 
-Similar to [Build and deploy Quarkus application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-quarkus-application-on-azure-container-apps), create a specific `gateway` application in your Azure Container Apps.
+Similar to [Build and deploy Java application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-java-application-on-azure-container-apps), create a specific `gateway` application in your Azure Container Apps.
 
 ```bash
 # Build and push gateway image to ACR
-cd java-on-aca-with-ai/quarkus-micronaut/04-build-a-nginx-reverse-proxy
+cd 04-build-a-nginx-reverse-proxy
 
 docker buildx build --platform linux/amd64 -f gateway/Dockerfile -t gateway ./gateway
 docker tag gateway ${ACR_LOGIN_SERVER}/gateway
@@ -129,7 +129,7 @@ az containerapp create \
         WEATHER_SERVICE_URL=http://weather-service \
     --ingress 'external' \
     --min-replicas 1
-cd ../../..
+cd ..
 ```
 
 ## Test the project in the cloud

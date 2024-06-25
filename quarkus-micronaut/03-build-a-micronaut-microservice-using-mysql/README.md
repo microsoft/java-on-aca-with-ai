@@ -186,7 +186,7 @@ datasources.default.driver-class-name=com.mysql.cj.jdbc.Driver
 otel.traces.exporter=otlp
 ```
 
-For database connection configuration, we will create secrets and reference them in environment variables later.
+For database connection configuration, we will create secrets and reference them in environment variables when deploying the application on Azure Container Apps later.
 
 ### Automatic telemetry data capture with OpenTelemetry Java agent
 
@@ -210,11 +210,11 @@ The output Docker image can automatically capture telemetry data and send it to 
 
 ## Build and deploy the application on Azure Container Apps
 
-Similar to [Build and deploy Micronaut application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-micronaut-application-on-azure-container-apps), create a specific `weather-service` application in your Azure Container Apps.
+Similar to [Build and deploy Java application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-java-application-on-azure-container-apps), create a specific `weather-service` application in your Azure Container Apps.
 
 ```bash
 # Build and push weather-service image to ACR
-cd java-on-aca-with-ai/quarkus-micronaut/03-build-a-micronaut-microservice-using-mysql
+cd 03-build-a-micronaut-microservice-using-mysql
 mvn clean package -DskipTests -f weather-service/pom.xml
 
 docker buildx build --platform linux/amd64 -f weather-service/Dockerfile-otel-agent -t weather-service ./weather-service
@@ -247,7 +247,7 @@ az containerapp create \
         DATASOURCES_DEFAULT_PASSWORD=secretref:datasourcepassword \
     --ingress 'external' \
     --min-replicas 1
-cd ../../..
+cd ..
 ```
 
 ## Test the project in the cloud

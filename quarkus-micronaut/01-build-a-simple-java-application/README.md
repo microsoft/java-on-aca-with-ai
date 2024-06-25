@@ -14,7 +14,7 @@ The Quarkus application that we create in this guide is [quarkus-simple-applicat
 
 A typical way to create Quarkus applications is to use the [Quarkus maven plugin](https://quarkus.io/guides/quarkus-maven-plugin), [Quarkus CLI](https://quarkus.io/blog/quarkus-cli/) or [Quarkus - Start coding with code.quarkus.io](https://code.quarkus.io/). Feel free to explore more outside this training. For the purposes of this training, we will only use the [Quarkus maven plugin](https://quarkus.io/guides/quarkus-maven-plugin) to create a simple Quarkus application.
 
-In an __empty__ directory execute the `mvn` command line below:
+Execute the `mvn` command line below:
 
 ```bash
 mvn io.quarkus.platform:quarkus-maven-plugin:3.11.3:create \
@@ -56,7 +56,7 @@ It’s a very simple REST endpoint, returning "Hello from Quarkus REST" to reque
 Run the project:
 
 ```bash
-cd java-on-aca-with-ai/quarkus-micronaut/01-build-a-simple-java-application
+cd 01-build-a-simple-java-application
 mvn clean package -f quarkus-simple-application/pom.xml
 java -jar quarkus-simple-application/target/quarkus-app/quarkus-run.jar
 ```
@@ -67,16 +67,23 @@ Open another terminal and requesting the `/hello` endpoint should return the "He
 curl http://localhost:8080/hello --silent
 ```
 
-Finally, press `Ctrl+C` to stop the application.
+Switch back to the terminal where the Quarkus application is running, and press `Ctrl+C` to stop the application.
 
-### Build and deploy Quarkus application on Azure Container Apps
+Build and run the Quarkus application as a native executable:
 
-This section shows how to build a native Quarkus executable, build a Docker image, push it to the Azure Container Registry, and deploy it to the Azure Container Apps.
+```bash
+mvn clean package -Dnative -Dquarkus.native.container-build -f quarkus-simple-application/pom.xml
+./quarkus-simple-application/target/quarkus-simple-application-1.0.0-SNAPSHOT-runner
+```
+
+Test the application using the sampe approach as before, and press `Ctrl+C` to stop the application.
+
+### Build and deploy Java application on Azure Container Apps
+
+This section shows how to build a Java application (Quarkus native executable), build a Docker image, push it to the Azure Container Registry, and deploy it to the Azure Container Apps.
 
 ```bash
 # Build and push quarkus-simple-application image to ACR
-mvn clean package -Dnative -Dquarkus.native.container-build -f quarkus-simple-application/pom.xml
-
 docker buildx build --platform linux/amd64 -f quarkus-simple-application/src/main/docker/Dockerfile.native -t quarkus-simple-application ./quarkus-simple-application
 docker tag quarkus-simple-application ${ACR_LOGIN_SERVER}/quarkus-simple-application
 docker login $ACR_LOGIN_SERVER \
@@ -96,7 +103,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
-cd ../../..
+cd ..
 ```
 
 Invoke `/hello` endpoint exposed by the Azure Container Apps `quarkus-simple-application` and test if it works as expected:
@@ -118,7 +125,7 @@ The Micronaut application that we create in this guide is [micronaut-simple-appl
 
 A typical way to create Micronaut applications is to use the [Micronaut Command Line Interface](https://docs.micronaut.io/latest/guide/#cli) or [Micronaut Launch](https://launch.micronaut.io/). Feel free to explore more outside this training. For the purposes of this training, we will only use the [Micronaut Launch](https://launch.micronaut.io/) to create a simple Micronaut application.
 
-In an __empty__ directory execute the the following commands:
+Execute the following commands:
 
 ```bash
 curl --location \
@@ -161,7 +168,7 @@ It’s a very simple REST endpoint, returning "Hello from Micronaut REST" to req
 Run the project:
 
 ```bash
-cd java-on-aca-with-ai/quarkus-micronaut/01-build-a-simple-java-application
+cd 01-build-a-simple-java-application
 mvn clean package -f micronaut-simple-application/pom.xml
 java -jar micronaut-simple-application/target/micronaut-simple-application-0.1.jar
 ```
@@ -174,12 +181,11 @@ curl http://localhost:8080/hello --silent
 
 Finally, press `Ctrl+C` to stop the application.
 
-### Build and deploy Micronaut application on Azure Container Apps
+### Build and deploy Java application on Azure Container Apps using jar artifact
 
 This section shows how to deploy `micronaut-simple-application` to the Azure Container Apps with a jar artifact.
 
 ```bash
-# Deploy micronaut-simple-application to Azure Container Apps
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name micronaut-simple-application \
@@ -188,7 +194,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
-cd ../../..
+cd ..
 ```
 
 Invoke `/hello` endpoint exposed by the Azure Container Apps `micronaut-simple-application` and test if it works as expected:
