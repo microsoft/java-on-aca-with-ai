@@ -1,0 +1,46 @@
+# Load the OpenTelemetry module
+load_module modules/ngx_otel_module.so;
+
+events {}
+
+http {
+
+    # Turn tracing on for http traffic
+    otel_trace on;
+
+    # If you are at the start of the request, this context
+    # will be created by the library and consumed by downstream
+    # services. Required if you want traces to be connected to each
+    # other across services ("distributed tracing")
+    otel_trace_context inject;
+
+    # This is how the NGINX server will appear in your trace viewer
+    otel_service_name "gateway";
+
+    otel_exporter {
+        endpoint ${OTEL_EXPORTER_OTLP_ENDPOINT};
+    }
+
+    server {
+        # Server configuration
+        listen ${PORT};
+        # Allow CORS
+        add_header 'Access-Control-Allow-Origin' '*';
+        
+        # Route requests /city-service to the city-service defined in the environment variable CITY_SERVICE_URL
+        location /city-service {
+            rewrite ^/city-service/(.*)$ /$1 break;
+
+            proxy_pass ${CITY_SERVICE_URL};
+            proxy_http_version 1.1;
+        }
+
+        # Route requests /weather-service to the weather-service defined in the environment variable WEATHER_SERVICE_URL
+        location /weather-service {
+            rewrite ^/weather-service/(.*)$ /$1 break;
+
+            proxy_pass ${WEATHER_SERVICE_URL};
+            proxy_http_version 1.1;
+        }
+    }
+}

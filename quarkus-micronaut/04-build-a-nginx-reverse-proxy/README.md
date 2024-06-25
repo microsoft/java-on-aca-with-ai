@@ -6,6 +6,152 @@ Build a [NGINX Reverse Proxy](https://docs.nginx.com/nginx/admin-guide/web-serve
 
 ---
 
+## Create a NGINX Reverse Proxy
+
+The NGINX reverse proxy that we create in this guide is [gateway](gateway).
+
+### NGINX configuration
+
+The `gateway/nginx/nginx.conf.template` file contains the NGINX configuration for OpenTelemetry and reverse proxies that route requests to the city-service and weather-service:
+
+```nginx
+# Load the OpenTelemetry module
+load_module modules/ngx_otel_module.so;
+
+events {}
+
+http {
+
+    # Turn tracing on for http traffic
+    otel_trace on;
+
+    # If you are at the start of the request, this context
+    # will be created by the library and consumed by downstream
+    # services. Required if you want traces to be connected to each
+    # other across services ("distributed tracing")
+    otel_trace_context inject;
+
+    # This is how the NGINX server will appear in your trace viewer
+    otel_service_name "gateway";
+
+    otel_exporter {
+        endpoint ${OTEL_EXPORTER_OTLP_ENDPOINT};
+    }
+
+    server {
+        # Server configuration
+        listen ${PORT};
+        # Allow CORS
+        add_header 'Access-Control-Allow-Origin' '*';
+        
+        # Route requests /city-service to the city-service defined in the environment variable CITY_SERVICE_URL
+        location /city-service {
+            rewrite ^/city-service/(.*)$ /$1 break;
+
+            proxy_pass ${CITY_SERVICE_URL};
+            proxy_http_version 1.1;
+        }
+
+        # Route requests /weather-service to the weather-service defined in the environment variable WEATHER_SERVICE_URL
+        location /weather-service {
+            rewrite ^/weather-service/(.*)$ /$1 break;
+
+            proxy_pass ${WEATHER_SERVICE_URL};
+            proxy_http_version 1.1;
+        }
+    }
+}
+```
+
+### NGINX entrypoint script
+
+The `gateway/nginx/entrypoint.sh` script replaces environment variables in the NGINX configuration file at runtime and starts the NGINX server:
+
+```bash
+#!/usr/bin/env sh
+set -eu
+
+# Remove starting http:// from the OTEL_EXPORTER_OTLP_ENDPOINT, see https://github.com/grpc/grpc/issues/19954#issuecomment-676273319
+export OTEL_EXPORTER_OTLP_ENDPOINT=$(echo $OTEL_EXPORTER_OTLP_ENDPOINT | sed 's/http:\/\///g')
+
+# Replace the environment variables in the nginx.conf.template with the actual values
+envsubst '${OTEL_EXPORTER_OTLP_ENDPOINT} ${PORT} ${CITY_SERVICE_URL} ${WEATHER_SERVICE_URL}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
+
+exec "$@"
+```
+
+### NGINX Dockerfile
+
+The `gateway/Dockerfile` Dockerfile uses `nginx:$NGINX_VERSION-otel` as the base image, which includes the OpenTelemetry module. The `nginx.conf.template` file is copied to the NGINX configuration directory, and the `entrypoint.sh` script is copied to the root directory.
+
+```Dockerfile
+ARG NGINX_VERSION=1.26
+FROM nginx:$NGINX_VERSION-otel
+
+COPY nginx/nginx.conf.template /etc/nginx/nginx.conf.template
+COPY nginx/entrypoint.sh /
+
+ENV OTEL_EXPORTER_OTLP_ENDPOINT=localhost:4317
+ENV PORT=8080
+ENV CITY_SERVICE_URL=http://city-service:8080
+ENV WEATHER_SERVICE_URL=http://weather-service:8080
+ENTRYPOINT ["/entrypoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
+```
+
+## Build and deploy the application on Azure Container Apps
+
+Similar to [Build and deploy Quarkus application on Azure Container Apps](../01-build-a-simple-java-application/README.md#build-and-deploy-quarkus-application-on-azure-container-apps), create a specific `gateway` application in your Azure Container Apps.
+
+```bash
+# Build and push gateway image to ACR
+cd java-on-aca-with-ai/quarkus-micronaut/04-build-a-nginx-reverse-proxy
+
+docker buildx build --platform linux/amd64 -f gateway/Dockerfile -t gateway ./gateway
+docker tag gateway ${ACR_LOGIN_SERVER}/gateway
+docker login $ACR_LOGIN_SERVER \
+    -u $ACR_USER_NAME \
+    -p $ACR_PASSWORD
+docker push ${ACR_LOGIN_SERVER}/gateway
+
+# Deploy gateway to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name gateway \
+    --image ${ACR_LOGIN_SERVER}/gateway \
+    --environment $ACA_ENV \
+    --registry-server $ACR_LOGIN_SERVER \
+    --registry-username $ACR_USER_NAME \
+    --registry-password $ACR_PASSWORD \
+    --target-port 8080 \
+    --env-vars \
+        CITY_SERVICE_URL=http://city-service \
+        WEATHER_SERVICE_URL=http://weather-service \
+    --ingress 'external' \
+    --min-replicas 1
+cd ../../..
+```
+
+## Test the project in the cloud
+
+Invoke `/city-service/cities` and `/weather-service/weather/city` endpoints exposed by the Azure Container Apps `gateway` and test if they work as expected:
+
+```bash
+APP_URL=https://$(az containerapp show \
+    --name gateway \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --query properties.configuration.ingress.fqdn \
+    -o tsv)
+
+# You should see the list of cities returned: [{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]
+curl $APP_URL/city-service/cities --silent
+
+# You should see the weather for London, UK returned: {"city":"London, UK","description":"Quite cloudy","icon":"weather-pouring"}
+curl $APP_URL/weather-service/weather/city?name=London%2C%20UK --silent
+
+# You should see the weather for Paris, France returned: {"city":"Paris, France","description":"Very cloudy!","icon":"weather-fog"}
+curl $APP_URL/weather-service/weather/city?name=Paris%2C%20France --silent
+```
 
 ---
 

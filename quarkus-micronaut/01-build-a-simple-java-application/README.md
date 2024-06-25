@@ -56,6 +56,7 @@ It’s a very simple REST endpoint, returning "Hello from Quarkus REST" to reque
 Run the project:
 
 ```bash
+cd java-on-aca-with-ai/quarkus-micronaut/01-build-a-simple-java-application
 mvn clean package -f quarkus-simple-application/pom.xml
 java -jar quarkus-simple-application/target/quarkus-app/quarkus-run.jar
 ```
@@ -95,6 +96,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
+cd ../../..
 ```
 
 Invoke `/hello` endpoint exposed by the Azure Container Apps `quarkus-simple-application` and test if it works as expected:
@@ -159,6 +161,7 @@ It’s a very simple REST endpoint, returning "Hello from Micronaut REST" to req
 Run the project:
 
 ```bash
+cd java-on-aca-with-ai/quarkus-micronaut/01-build-a-simple-java-application
 mvn clean package -f micronaut-simple-application/pom.xml
 java -jar micronaut-simple-application/target/micronaut-simple-application-0.1.jar
 ```
@@ -185,6 +188,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
+cd ../../..
 ```
 
 Invoke `/hello` endpoint exposed by the Azure Container Apps `micronaut-simple-application` and test if it works as expected:

@@ -24,6 +24,8 @@ This training lab requires the following to be installed on your machine:
 
 * The Bash shell. While Azure CLI should behave identically on all environments, shell semantics vary. Therefore, only bash can be used with the commands in this training. To complete this training on Windows, use [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install).
 
+* [Git](https://git-scm.com/downloads)
+
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.61.0 or later. You can check the version of your current Azure CLI installation by running:
 
   ```bash
@@ -256,6 +258,14 @@ az cognitiveservices account deployment create \
     --model-format OpenAI \
     --sku Standard \
     --capacity 10
+```
+
+## Preparing the code samples
+
+Clone the repository that contains the complete code samples for this lab:
+
+```bash
+git clone https://github.com/microsoft/java-on-aca-with-ai.git
 ```
 
 ---

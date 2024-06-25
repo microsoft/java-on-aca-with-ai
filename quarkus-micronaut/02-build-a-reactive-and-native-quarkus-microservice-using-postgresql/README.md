@@ -160,6 +160,7 @@ Similar to [Build and deploy Quarkus application on Azure Container Apps](../01-
 
 ```bash
 # Build and push city-service image to ACR
+cd java-on-aca-with-ai/quarkus-micronaut/02-build-a-reactive-and-native-quarkus-microservice-using-postgresql
 mvn clean package -DskipTests -Dnative -Dquarkus.native.container-build -f city-service/pom.xml
 
 docker buildx build --platform linux/amd64 -f city-service/src/main/docker/Dockerfile.native -t city-service ./city-service
@@ -195,6 +196,7 @@ az containerapp create \
         QUARKUS_DATASOURCE_PASSWORD=secretref:dbpassword \
     --ingress 'external' \
     --min-replicas 1
+cd ../../..
 ```
 
 ## Test the project in the cloud
