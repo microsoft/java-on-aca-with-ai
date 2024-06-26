@@ -227,8 +227,12 @@ az containerapp create \
     --min-replicas 1 \
     --ingress external \
     --target-port 8080 \
-    --secrets azureopenaikey=$AZURE_OPENAI_KEY \
-    --env-vars SPRING_AI_AZURE_OPENAI_ENDPOINT=$AZURE_OPENAI_ENDPOINT \
+    --secrets azureopenaikey=$AZURE_OPENAI_KEY
+
+az containerapp update \
+    --name ai-weather-application \
+    --resource-group $RESOURCE_GROUP \
+    --set-env-vars SPRING_AI_AZURE_OPENAI_ENDPOINT=$AZURE_OPENAI_ENDPOINT \
         SPRING_AI_AZURE_OPENAI_API_KEY=secretref:azureopenaikey
 cd ..
 ```
