@@ -66,6 +66,8 @@ Open the URL in a web browser, you should see a page where the "Gateway URL" is 
 
 ![VueJS front-end](media/01-vuejs-frontend.png)
 
+> Note: `gateway` in the Gateway URL is the name of the Azure Container Apps for the NGINX Reverse Proxy we deployed in the previous guide. If you used a different name, replace `gateway` with the name you used.
+
 ## Run the project locally
 
 Optionally, you can run the containerized VueJS application locally:
