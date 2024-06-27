@@ -1,0 +1,11 @@
+FROM openjdk:17
+
+WORKDIR /app
+
+ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar /app/opentelemetry-javaagent.jar
+
+COPY target/weather-service-0.1.jar /app/weather-service.jar
+
+EXPOSE 8080
+
+CMD ["java", "-javaagent:/app/opentelemetry-javaagent.jar", "-jar", "weather-service.jar"]
