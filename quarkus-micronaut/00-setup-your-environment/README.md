@@ -107,6 +107,9 @@ az group create \
 az postgres flexible-server create \
     --name $POSTGRESQL_SERVER_NAME \
     --resource-group $RESOURCE_GROUP_NAME \
+    --location $LOCATION \
+    --sku-name Standard_B1ms \
+    --tier Burstable \
     --admin-user $DB_ADMIN \
     --admin-password $DB_ADMIN_PWD \
     --database-name $DB_NAME \
@@ -116,6 +119,9 @@ az postgres flexible-server create \
 az mysql flexible-server create \
     --name $MYSQL_SERVER_NAME \
     --resource-group $RESOURCE_GROUP_NAME \
+    --location $LOCATION \
+    --sku-name Standard_B1ms \
+    --tier Burstable \
     --admin-user $DB_ADMIN \
     --admin-password $DB_ADMIN_PWD \
     --database-name $DB_NAME \
@@ -124,6 +130,19 @@ az mysql flexible-server create \
 ```
 
 These databases will be used by the microservices later.
+
+> 💡 If you receive similar error message "The location is restricted for provisioning of flexible servers. Please try using another region" or "No available SKUs in this location", you need to specify a different location using the `--location` parameter and try again. Use the following command to list available SKUs in a specific location for Azure Database for PostgreSQL Flexible Server and Azure Database for MySQL Flexible Server:
+>
+> ```bash
+> az postgres flexible-server list-skus --location <Location>
+> az mysql flexible-server list-skus --location <Location>
+> ```
+>
+> If you are not sure which locations are available for your subscription, you can list them using the following command:
+>
+> ```bash
+> az account list-locations --query "[].name" -o tsv
+> ```
 
 ### Create an Azure Container Registry
 
