@@ -23,7 +23,18 @@ This training lab requires the following to be installed on your machine:
 * 💡 In some sections, you will access the UI of the Microservice applications in a web browser. Use the [Microsoft Edge](https://microsoft.com/edge), Google Chrome, or Firefox for these sections.
 
 * The Bash shell. While Azure CLI should behave identically on all environments, shell semantics vary. Therefore, only bash can be used with the commands in this training. To complete this training on Windows, use [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install).
-
+Note: You will need to upgrade the default Java and Maven version in WSL to complete this lab.
+  ```bash
+sudo apt update
+sudo apt install unzip
+sudo apt install zip
+curl -s "https://get.sdkman.io" | bash
+ 
+sudo apt-get remove maven
+sdk install maven
+ 
+sdk install  java 17.0.11-ms
+  ``` 
 * [Git](https://git-scm.com/downloads)
 
 * [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) version 2.61.0 or later. You can check the version of your current Azure CLI installation by running:
