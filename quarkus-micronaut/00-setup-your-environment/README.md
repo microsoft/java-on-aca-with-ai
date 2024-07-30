@@ -24,6 +24,7 @@ This training lab requires the following to be installed on your machine:
 
 * The Bash shell. While Azure CLI should behave identically on all environments, shell semantics vary. Therefore, only bash can be used with the commands in this training. To complete this training on Windows, use [Windows Subsystem for Linux](https://learn.microsoft.com/windows/wsl/install).
 Note: You will need to upgrade the default Java and Maven version in WSL to complete this lab.
+
   ```bash
 sudo apt update
 sudo apt install unzip
