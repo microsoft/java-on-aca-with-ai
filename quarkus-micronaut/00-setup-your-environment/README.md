@@ -92,7 +92,7 @@ Define the following environment variables in your bash shell, they will be used
 
 ```bash
 let "randomIdentifier=$RANDOM*$RANDOM"
-LOCATION=eastus
+LOCATION=westus
 RESOURCE_GROUP_NAME=aca-lab-rg-$randomIdentifier
 POSTGRESQL_SERVER_NAME=postgres$randomIdentifier
 MYSQL_SERVER_NAME=mysql$randomIdentifier
