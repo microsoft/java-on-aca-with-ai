@@ -26,15 +26,15 @@ This training lab requires the following to be installed on your machine:
 Note: You will need to upgrade the default Java and Maven version in WSL to complete this lab.
 
   ```bash
-sudo apt update
-sudo apt install unzip
-sudo apt install zip
-curl -s "https://get.sdkman.io" | bash
- 
-sudo apt-get remove maven
-sdk install maven
- 
-sdk install  java 17.0.11-ms
+    sudo apt update
+    sudo apt install unzip
+    sudo apt install zip
+    curl -s "https://get.sdkman.io" | bash
+     
+    sudo apt-get remove maven
+    sdk install maven
+     
+    sdk install  java 17.0.11-ms
   ``` 
 * [Git](https://git-scm.com/downloads)
 
