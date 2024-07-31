@@ -132,7 +132,7 @@ curl --location \
     --request GET 'https://launch.micronaut.io/create/default/com.example.micronaut-simple-application?lang=JAVA&build=MAVEN&test=JUNIT&javaVersion=JDK_17' \
     --output micronaut-simple-application.zip \
     && unzip micronaut-simple-application.zip \
-    && rm -rf micronaut-simple-application.zip \
+    && rm -rf micronaut-simple-application.zip
 ```
 
 The project uses Java 17, uses Maven as build tool, uses `com.example` as group ID and `micronaut-simple-application` as artifact ID.
