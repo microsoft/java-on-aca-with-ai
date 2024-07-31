@@ -73,6 +73,7 @@ Build and run the Quarkus application as a native executable:
 
 ```bash
 mvn clean package -Dnative -Dquarkus.native.container-build -f quarkus-simple-application/pom.xml
+
 ./quarkus-simple-application/target/quarkus-simple-application-1.0.0-SNAPSHOT-runner
 ```
 
