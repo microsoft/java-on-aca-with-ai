@@ -78,6 +78,7 @@ mvn clean package -Dnative -DskipTests -Dquarkus.native.container-build -Dquarku
 ```
 
 > If you run the native executable in MacOS, you may receive similar error message "zsh: exec format error: ./quarkus-simple-application/target/quarkus-simple-application-1.0.0-SNAPSHOT-runner". This is because the Quarkus builder image creates Linux ELF64 executables that is incompatible with MacOS. If you really want to build a MacOS compatible native exectutable, you have to configure GraalVM locally by following [this guide](https://quarkus.io/guides/building-native-image#configuring-graalvm), and run `mvn clean package -Dnative -DskipTests -f quarkus-simple-application/pom.xml`.
+> 
 > Finally, you still need to use the Quarkus builder image to build the native executable, whic is required to build the container image later for Azure Container Apps.
 
 Test the application using the sampe approach as before, and press `Ctrl+C` to stop the application.
