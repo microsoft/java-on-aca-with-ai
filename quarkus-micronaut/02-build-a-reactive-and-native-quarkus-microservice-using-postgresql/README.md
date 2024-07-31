@@ -161,7 +161,7 @@ Similar to [Build and deploy Java application on Azure Container Apps](../01-bui
 ```bash
 # Build and push city-service image to ACR
 cd 02-build-a-reactive-and-native-quarkus-microservice-using-postgresql
-mvn clean package -DskipTests -Dnative -Dquarkus.native.container-build -f city-service/pom.xml
+mvn clean package -DskipTests -Dnative -Dquarkus.native.container-build -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.4.0-Final-java21-amd64 -f city-service/pom.xml
 
 docker buildx build --platform linux/amd64 -f city-service/src/main/docker/Dockerfile.native -t city-service ./city-service
 docker tag city-service ${ACR_LOGIN_SERVER}/city-service
