@@ -180,9 +180,32 @@ az containerapp create \
     --registry-password $ACR_PASSWORD \
     --target-port 8080 \
     --secrets \
-        openairesourcename=${QUARKUS_LANGCHAIN4J_AZURE_OPENAI_RESOURCE_NAME} \
-        openaideploymentname=${QUARKUS_LANGCHAIN4J_AZURE_OPENAI_DEPLOYMENT_NAME} \
-        openaiapikey=${QUARKUS_LANGCHAIN4J_AZURE_OPENAI_API_KEY} \
+        openairesourcename=${AZURE_OPENAI_NAME} \
+        openaideploymentname=${AZURE_OPENAI_MODEL_NAME} \
+        openaiapikey=${AZURE_OPENAI_KEY} \
+    --env-vars \
+        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_RESOURCE_NAME=secretref:openairesourcename \
+        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_DEPLOYMENT_NAME=secretref:openaideploymentname \
+        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_API_KEY=secretref:openaiapikey \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
+
+```bash
+# Deploy ai-weather-application with the existing image ghcr.io/microsoft/ai-weather-application-v1 to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name ai-weather-application \
+    --image ghcr.io/microsoft/ai-weather-application-v1 \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --secrets \
+        openairesourcename=${AZURE_OPENAI_NAME} \
+        openaideploymentname=${AZURE_OPENAI_MODEL_NAME} \
+        openaiapikey=${AZURE_OPENAI_KEY} \
     --env-vars \
         QUARKUS_LANGCHAIN4J_AZURE_OPENAI_RESOURCE_NAME=secretref:openairesourcename \
         QUARKUS_LANGCHAIN4J_AZURE_OPENAI_DEPLOYMENT_NAME=secretref:openaideploymentname \
