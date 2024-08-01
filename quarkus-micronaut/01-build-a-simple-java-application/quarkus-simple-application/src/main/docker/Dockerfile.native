@@ -15,7 +15,6 @@
 #
 ###
 FROM registry.access.redhat.com/ubi8/ubi-minimal:8.9
-LABEL org.opencontainers.image.source=https://github.com/microsoft/java-on-aca-with-ai
 WORKDIR /work/
 RUN chown 1001 /work \
     && chmod "g+rwX" /work \

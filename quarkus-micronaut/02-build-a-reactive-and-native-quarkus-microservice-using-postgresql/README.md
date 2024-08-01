@@ -199,9 +199,37 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
+Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
+
+```bash
+# Deploy city-service with the existing image ghcr.io/microsoft/city-service-v1 to Azure Container Apps
+export QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
+export QUARKUS_DATASOURCE_REACTIVE_URL=postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
+export QUARKUS_DATASOURCE_USERNAME=${DB_ADMIN}
+export QUARKUS_DATASOURCE_PASSWORD=${DB_ADMIN_PWD}
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name city-service \
+    --image ghcr.io/microsoft/city-service-v1 \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --secrets \
+        jdbcurl=${QUARKUS_DATASOURCE_JDBC_URL} \
+        reactiveurl=${QUARKUS_DATASOURCE_REACTIVE_URL} \
+        dbusername=${QUARKUS_DATASOURCE_USERNAME} \
+        dbpassword=${QUARKUS_DATASOURCE_PASSWORD} \
+    --env-vars \
+        QUARKUS_DATASOURCE_JDBC_URL=secretref:jdbcurl \
+        QUARKUS_DATASOURCE_REACTIVE_URL=secretref:reactiveurl \
+        QUARKUS_DATASOURCE_USERNAME=secretref:dbusername \
+        QUARKUS_DATASOURCE_PASSWORD=secretref:dbpassword \
+    --ingress 'external' \
+    --min-replicas 1
+```
+
 ## Test the project in the cloud
 
-Invoke `/cities` endpoint exposed by the Azure Container Apps `city-service` and test if it works as expected:
+Fetch the URL of the Azure Container Apps `city-service`:
 
 ```bash
 APP_URL=https://$(az containerapp show \
@@ -209,7 +237,11 @@ APP_URL=https://$(az containerapp show \
     --resource-group $RESOURCE_GROUP_NAME \
     --query properties.configuration.ingress.fqdn \
     -o tsv)
+```
 
+Wait for a while until the application is up and running, then invoke the `/cities` endpoint and test if it works as expected:
+
+```bash
 # You should see the list of cities returned: [{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]
 curl $APP_URL/cities --silent
 ```
