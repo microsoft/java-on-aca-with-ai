@@ -111,7 +111,7 @@ az containerapp create \
 cd ..
 ```
 
-Invoke `/hello` endpoint exposed by the Azure Container Apps `quarkus-simple-application` and test if it works as expected:
+Fetch the URL of the Azure Container Apps `quarkus-simple-application`:
 
 ```bash
 APP_URL=https://$(az containerapp show \
@@ -119,7 +119,11 @@ APP_URL=https://$(az containerapp show \
     --resource-group $RESOURCE_GROUP_NAME \
     --query properties.configuration.ingress.fqdn \
     -o tsv)
+```
 
+Wait for a while until the container is up and running, then invoke `/hello` endpoint and test if it works as expected:
+
+```bash
 # It should return "Hello from Quarkus REST"
 curl $APP_URL/hello --silent
 ```
@@ -202,7 +206,7 @@ az containerapp create \
 cd ..
 ```
 
-Invoke `/hello` endpoint exposed by the Azure Container Apps `micronaut-simple-application` and test if it works as expected:
+Fetch the URL of the Azure Container Apps `micronaut-simple-application`:
 
 ```bash
 APP_URL=https://$(az containerapp show \
@@ -210,7 +214,11 @@ APP_URL=https://$(az containerapp show \
     --resource-group $RESOURCE_GROUP_NAME \
     --query properties.configuration.ingress.fqdn \
     -o tsv)
+```
 
+Wait for a while until the container is up and running, then invoke `/hello` endpoint and test if it works as expected:
+
+```bash
 # It should return "Hello from Micronaut REST"
 curl $APP_URL/hello --silent
 ```
