@@ -132,9 +132,27 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
+Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
+
+```bash
+# Deploy gateway with the existing image ghcr.io/microsoft/gateway-v1 to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name gateway \
+    --image ghcr.io/microsoft/gateway-v1 \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --env-vars \
+        CITY_SERVICE_URL=http://city-service \
+        WEATHER_SERVICE_URL=http://weather-service \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
 ## Test the project in the cloud
 
-Invoke `/city-service/cities` and `/weather-service/weather/city` endpoints exposed by the Azure Container Apps `gateway` and test if they work as expected:
+Fetch the URL of the Azure Container Apps `gateway`:
 
 ```bash
 APP_URL=https://$(az containerapp show \
@@ -142,7 +160,11 @@ APP_URL=https://$(az containerapp show \
     --resource-group $RESOURCE_GROUP_NAME \
     --query properties.configuration.ingress.fqdn \
     -o tsv)
+```
 
+Invoke `/city-service/cities` and `/weather-service/weather/city` endpoints and test if they work as expected:
+
+```bash
 # You should see the list of cities returned: [{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]
 curl $APP_URL/city-service/cities --silent
 
