@@ -111,6 +111,20 @@ az containerapp create \
 cd ..
 ```
 
+Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
+
+```bash
+# Deploy the existing image ghcr.io/microsoft/quarkus-simple-application to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name quarkus-simple-application \
+    --image ghcr.io/microsoft/quarkus-simple-application \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --ingress 'external' \
+    --min-replicas 1
+```
+
 Fetch the URL of the Azure Container Apps `quarkus-simple-application`:
 
 ```bash
