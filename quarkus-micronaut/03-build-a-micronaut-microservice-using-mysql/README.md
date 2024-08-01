@@ -250,9 +250,35 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
+Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
+
+```bash
+# Deploy weather-service with the existing image ghcr.io/microsoft/weather-service-v1 to Azure Container Apps
+export DATASOURCES_DEFAULT_URL=jdbc:mysql://$MYSQL_SERVER_NAME.mysql.database.azure.com:3306/$DB_NAME
+export DATASOURCES_DEFAULT_USERNAME=$DB_ADMIN
+export DATASOURCES_DEFAULT_PASSWORD=$DB_ADMIN_PWD
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name weather-service \
+    --image ghcr.io/microsoft/weather-service-v1 \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --secrets \
+        datasourceurl=${DATASOURCES_DEFAULT_URL} \
+        datasourceusername=${DATASOURCES_DEFAULT_USERNAME} \
+        datasourcepassword=${DATASOURCES_DEFAULT_PASSWORD} \
+    --env-vars \
+        DATASOURCES_DEFAULT_URL=secretref:datasourceurl \
+        DATASOURCES_DEFAULT_USERNAME=secretref:datasourceusername \
+        DATASOURCES_DEFAULT_PASSWORD=secretref:datasourcepassword \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
 ## Test the project in the cloud
 
-Invoke `/weather/city` endpoint exposed by the Azure Container Apps `weather-service` and test if it works as expected:
+Fetch the URL of the Azure Container Apps `weather-service`:
 
 ```bash
 APP_URL=https://$(az containerapp show \
@@ -260,7 +286,11 @@ APP_URL=https://$(az containerapp show \
     --resource-group $RESOURCE_GROUP_NAME \
     --query properties.configuration.ingress.fqdn \
     -o tsv)
+```
 
+Wait for a while until the application is up and running, then invoke the `/weather/city` endpoint and test if it works as expected:
+
+```bash
 # You should see the weather for London, UK returned: {"city":"London, UK","description":"Quite cloudy","icon":"weather-pouring"}
 curl $APP_URL/weather/city?name=London%2C%20UK --silent
 
