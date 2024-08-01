@@ -56,7 +56,7 @@ It’s a very simple REST endpoint, returning "Hello from Quarkus REST" to reque
 Run the project:
 
 ```bash
-cd 01-build-a-simple-java-application
+cd ${BASE_DIR}/01-build-a-simple-java-application
 mvn clean package -f quarkus-simple-application/pom.xml
 java -jar quarkus-simple-application/target/quarkus-app/quarkus-run.jar
 ```
@@ -108,7 +108,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
-cd ..
+cd ${BASE_DIR}
 ```
 
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
@@ -123,6 +123,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
+cd ${BASE_DIR}
 ```
 
 Fetch the URL of the Azure Container Apps `quarkus-simple-application`:
@@ -191,7 +192,7 @@ It’s a very simple REST endpoint, returning "Hello from Micronaut REST" to req
 Run the project:
 
 ```bash
-cd 01-build-a-simple-java-application
+cd ${BASE_DIR}/01-build-a-simple-java-application
 mvn clean package -f micronaut-simple-application/pom.xml
 java -jar micronaut-simple-application/target/micronaut-simple-application-0.1.jar
 ```
@@ -217,7 +218,7 @@ az containerapp create \
     --target-port 8080 \
     --ingress 'external' \
     --min-replicas 1
-cd ..
+cd ${BASE_DIR}
 ```
 
 Fetch the URL of the Azure Container Apps `micronaut-simple-application`:

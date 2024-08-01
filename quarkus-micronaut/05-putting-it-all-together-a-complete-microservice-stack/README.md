@@ -25,7 +25,7 @@ Similar to [Build and deploy Java application on Azure Container Apps](../01-bui
 
 ```bash
 # Build and push weather-app image to ACR
-cd 05-putting-it-all-together-a-complete-microservice-stack
+cd ${BASE_DIR}/05-putting-it-all-together-a-complete-microservice-stack
 
 docker buildx build --platform linux/amd64 -f weather-app/Dockerfile -t weather-app ./weather-app
 docker tag weather-app ${ACR_LOGIN_SERVER}/weather-app
@@ -46,7 +46,7 @@ az containerapp create \
     --target-port 80 \
     --ingress 'external' \
     --min-replicas 1
-cd ..
+cd ${BASE_DIR}
 ```
 
 ## Test the project in the cloud

@@ -298,6 +298,7 @@ Clone the repository that contains the complete code samples for this lab, and n
 ```bash
 git clone https://github.com/microsoft/java-on-aca-with-ai.git
 cd java-on-aca-with-ai/quarkus-micronaut
+BASE_DIR=$PWD
 ```
 
 ---

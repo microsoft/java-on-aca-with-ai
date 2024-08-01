@@ -131,7 +131,7 @@ export QUARKUS_LANGCHAIN4J_AZURE_OPENAI_API_KEY=${AZURE_OPENAI_KEY}
 Then build and run the Quarkus application as a native executable:
 
 ```bash
-cd 06-build-a-quarkus-ai-application-using-azure-openai
+cd ${BASE_DIR}/06-build-a-quarkus-ai-application-using-azure-openai
 mvn clean package -DskipTests -Dnative -Dquarkus.native.container-build -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-mandrel-builder-image:23.1.4.0-Final-java21-amd64 -f ai-weather-application/pom.xml
 ./ai-weather-application/target/ai-weather-application-1.0.0-SNAPSHOT-runner
 ```
@@ -189,7 +189,7 @@ az containerapp create \
         QUARKUS_LANGCHAIN4J_AZURE_OPENAI_API_KEY=secretref:openaiapikey \
     --ingress 'external' \
     --min-replicas 1
-cd ..
+cd ${BASE_DIR}
 ```
 
 ## Test the project in the cloud

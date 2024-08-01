@@ -214,7 +214,7 @@ Similar to [Build and deploy Java application on Azure Container Apps](../01-bui
 
 ```bash
 # Build and push weather-service image to ACR
-cd 03-build-a-micronaut-microservice-using-mysql
+cd ${BASE_DIR}/03-build-a-micronaut-microservice-using-mysql
 mvn clean package -DskipTests -f weather-service/pom.xml
 
 docker buildx build --platform linux/amd64 -f weather-service/Dockerfile-otel-agent -t weather-service ./weather-service
@@ -247,7 +247,7 @@ az containerapp create \
         DATASOURCES_DEFAULT_PASSWORD=secretref:datasourcepassword \
     --ingress 'external' \
     --min-replicas 1
-cd ..
+cd ${BASE_DIR}
 ```
 
 ## Test the project in the cloud

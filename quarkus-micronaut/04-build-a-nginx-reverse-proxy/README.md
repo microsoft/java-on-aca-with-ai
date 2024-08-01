@@ -105,7 +105,7 @@ Similar to [Build and deploy Java application on Azure Container Apps](../01-bui
 
 ```bash
 # Build and push gateway image to ACR
-cd 04-build-a-nginx-reverse-proxy
+cd ${BASE_DIR}/04-build-a-nginx-reverse-proxy
 
 docker buildx build --platform linux/amd64 -f gateway/Dockerfile -t gateway ./gateway
 docker tag gateway ${ACR_LOGIN_SERVER}/gateway
@@ -129,7 +129,7 @@ az containerapp create \
         WEATHER_SERVICE_URL=http://weather-service \
     --ingress 'external' \
     --min-replicas 1
-cd ..
+cd ${BASE_DIR}
 ```
 
 ## Test the project in the cloud
