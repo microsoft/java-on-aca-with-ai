@@ -166,7 +166,7 @@ Invoke `/city-service/cities` and `/weather-service/weather/city` endpoints and 
 
 ```bash
 # You should see the list of cities returned: [{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]
-curl $APP_URL/city-service/cities --silent
+curl -L "$APP_URL/city-service/cities" --silent
 
 # You should see the weather for London, UK returned: {"city":"London, UK","description":"Quite cloudy","icon":"weather-pouring"}
 curl -L "$APP_URL/weather-service/weather/city?name=London%2C%20UK" --silent

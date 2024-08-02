@@ -64,7 +64,7 @@ java -jar quarkus-simple-application/target/quarkus-app/quarkus-run.jar
 Open another terminal and requesting the `/hello` endpoint should return the "Hello from Quarkus REST" message.
 
 ```bash
-curl http://localhost:8080/hello --silent
+curl -L "http://localhost:8080/hello" --silent
 ```
 
 Switch back to the terminal where the Quarkus application is running, and press `Ctrl+C` to stop the application.
@@ -140,7 +140,7 @@ Wait for a while until the container is up and running, then invoke `/hello` end
 
 ```bash
 # It should return "Hello from Quarkus REST"
-curl $APP_URL/hello --silent
+curl -L "$APP_URL/hello" --silent
 ```
 
 ## Build a simple Micronaut application
@@ -200,7 +200,7 @@ java -jar micronaut-simple-application/target/micronaut-simple-application-0.1.j
 Open another terminal and requesting the `/hello` endpoint should return the "Hello from Micronaut REST" message.
 
 ```bash
-curl http://localhost:8080/hello --silent
+curl -L "http://localhost:8080/hello" --silent
 ```
 
 Finally, press `Ctrl+C` to stop the application.
@@ -250,7 +250,7 @@ Wait for a while until the container is up and running, then invoke `/hello` end
 
 ```bash
 # It should return "Hello from Micronaut REST"
-curl $APP_URL/hello --silent
+curl -L "$APP_URL/hello" --silent
 ```
 
 ## Conclusion
