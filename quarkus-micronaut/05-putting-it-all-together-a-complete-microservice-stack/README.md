@@ -52,11 +52,11 @@ cd ${BASE_DIR}
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
 
 ```bash
-# Deploy weather-app with the existing image ghcr.io/microsoft/weather-app-v1 to Azure Container Apps
+# Deploy weather-app with the existing image ghcr.io/microsoft/java-on-aca-with-ai-weather-app to Azure Container Apps
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name weather-app \
-    --image ghcr.io/microsoft/weather-app-v1 \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-weather-app \
     --environment $ACA_ENV \
     --target-port 80 \
     --ingress 'external' \

@@ -195,11 +195,11 @@ cd ${BASE_DIR}
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
 
 ```bash
-# Deploy ai-weather-application with the existing image ghcr.io/microsoft/ai-weather-application-v1 to Azure Container Apps
+# Deploy ai-weather-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-ai-weather-application to Azure Container Apps
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name ai-weather-application \
-    --image ghcr.io/microsoft/ai-weather-application-v1 \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-ai-weather-application \
     --environment $ACA_ENV \
     --target-port 8080 \
     --secrets \

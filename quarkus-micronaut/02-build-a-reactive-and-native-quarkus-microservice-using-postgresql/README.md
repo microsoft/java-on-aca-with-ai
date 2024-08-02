@@ -202,7 +202,7 @@ cd ${BASE_DIR}
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
 
 ```bash
-# Deploy city-service with the existing image ghcr.io/microsoft/city-service-v1 to Azure Container Apps
+# Deploy city-service with the existing image ghcr.io/microsoft/java-on-aca-with-ai-city-service to Azure Container Apps
 export QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
 export QUARKUS_DATASOURCE_REACTIVE_URL=postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
 export QUARKUS_DATASOURCE_USERNAME=${DB_ADMIN}
@@ -210,7 +210,7 @@ export QUARKUS_DATASOURCE_PASSWORD=${DB_ADMIN_PWD}
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name city-service \
-    --image ghcr.io/microsoft/city-service-v1 \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-city-service \
     --environment $ACA_ENV \
     --target-port 8080 \
     --secrets \

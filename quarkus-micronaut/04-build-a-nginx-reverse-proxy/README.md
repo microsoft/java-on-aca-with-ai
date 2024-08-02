@@ -135,11 +135,11 @@ cd ${BASE_DIR}
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
 
 ```bash
-# Deploy gateway with the existing image ghcr.io/microsoft/gateway-v1 to Azure Container Apps
+# Deploy gateway with the existing image ghcr.io/microsoft/java-on-aca-with-ai-gateway to Azure Container Apps
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name gateway \
-    --image ghcr.io/microsoft/gateway-v1 \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-gateway \
     --environment $ACA_ENV \
     --target-port 8080 \
     --env-vars \

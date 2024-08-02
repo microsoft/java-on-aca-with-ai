@@ -114,11 +114,11 @@ cd ${BASE_DIR}
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
 
 ```bash
-# Deploy quarkus-simple-application with the existing image ghcr.io/microsoft/quarkus-simple-application-v1 to Azure Container Apps
+# Deploy quarkus-simple-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-quarkus-simple-application to Azure Container Apps
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name quarkus-simple-application \
-    --image ghcr.io/microsoft/quarkus-simple-application-v1 \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-quarkus-simple-application \
     --environment $ACA_ENV \
     --target-port 8080 \
     --ingress 'external' \
@@ -224,11 +224,11 @@ cd ${BASE_DIR}
 Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
 
 ```bash
-# Deploy micronaut-simple-application with the existing image ghcr.io/microsoft/micronaut-simple-application-v1 to Azure Container Apps
+# Deploy micronaut-simple-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-micronaut-simple-application to Azure Container Apps
 az containerapp create \
     --resource-group $RESOURCE_GROUP_NAME \
     --name micronaut-simple-application \
-    --image ghcr.io/microsoft/micronaut-simple-application-v1 \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-micronaut-simple-application \
     --environment $ACA_ENV \
     --target-port 8080 \
     --ingress 'external' \
