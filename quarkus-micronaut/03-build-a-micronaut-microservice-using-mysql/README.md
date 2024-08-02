@@ -292,10 +292,10 @@ Wait for a while until the application is up and running, then invoke the `/weat
 
 ```bash
 # You should see the weather for London, UK returned: {"city":"London, UK","description":"Quite cloudy","icon":"weather-pouring"}
-curl $APP_URL/weather/city?name=London%2C%20UK --silent
+curl -L "$APP_URL/weather/city?name=London%2C%20UK" --silent
 
 # You should see the weather for Paris, France returned: {"city":"Paris, France","description":"Very cloudy!","icon":"weather-fog"}
-curl $APP_URL/weather/city?name=Paris%2C%20France --silent
+curl -L "$APP_URL/weather/city?name=Paris%2C%20France" --silent
 ```
 
 Finally, let's update the `weather-service` to make it accept internal traffic only instead of public accessible.
