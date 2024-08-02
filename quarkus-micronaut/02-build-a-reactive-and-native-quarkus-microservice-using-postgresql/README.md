@@ -243,7 +243,7 @@ Wait for a while until the application is up and running, then invoke the `/citi
 
 ```bash
 # You should see the list of cities returned: [{"id":1,"name":"Paris, France"},{"id":2,"name":"London, UK"}]
-curl $APP_URL/cities --silent
+curl -L "$APP_URL/cities" --silent
 ```
 
 Finally, let's update the `city-service` to make it accept internal traffic only instead of public accessible.
