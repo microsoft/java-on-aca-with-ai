@@ -6,6 +6,30 @@ Build a [NGINX Reverse Proxy](https://docs.nginx.com/nginx/admin-guide/web-serve
 
 ---
 
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time:
+
+```bash
+# Deploy gateway with the existing image ghcr.io/microsoft/java-on-aca-with-ai-gateway to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name gateway \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-gateway \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --env-vars \
+        CITY_SERVICE_URL=http://city-service \
+        WEATHER_SERVICE_URL=http://weather-service \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
+
 ## Create a NGINX Reverse Proxy
 
 The NGINX reverse proxy that we create in this guide is [gateway](gateway).
@@ -123,24 +147,6 @@ az containerapp create \
     --registry-server $ACR_LOGIN_SERVER \
     --registry-username $ACR_USER_NAME \
     --registry-password $ACR_PASSWORD \
-    --target-port 8080 \
-    --env-vars \
-        CITY_SERVICE_URL=http://city-service \
-        WEATHER_SERVICE_URL=http://weather-service \
-    --ingress 'external' \
-    --min-replicas 1
-cd ${BASE_DIR}
-```
-
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
-
-```bash
-# Deploy gateway with the existing image ghcr.io/microsoft/java-on-aca-with-ai-gateway to Azure Container Apps
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name gateway \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-gateway \
-    --environment $ACA_ENV \
     --target-port 8080 \
     --env-vars \
         CITY_SERVICE_URL=http://city-service \

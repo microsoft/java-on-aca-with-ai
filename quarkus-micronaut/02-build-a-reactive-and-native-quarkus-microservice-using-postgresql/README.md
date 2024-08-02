@@ -6,6 +6,40 @@ In this section, we'll build a reactive and native [Quarkus](https://quarkus.io/
 
 ---
 
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
+
+```bash
+# Deploy city-service with the existing image ghcr.io/microsoft/java-on-aca-with-ai-city-service to Azure Container Apps
+export QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
+export QUARKUS_DATASOURCE_REACTIVE_URL=postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
+export QUARKUS_DATASOURCE_USERNAME=${DB_ADMIN}
+export QUARKUS_DATASOURCE_PASSWORD=${DB_ADMIN_PWD}
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name city-service \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-city-service \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --secrets \
+        jdbcurl=${QUARKUS_DATASOURCE_JDBC_URL} \
+        reactiveurl=${QUARKUS_DATASOURCE_REACTIVE_URL} \
+        dbusername=${QUARKUS_DATASOURCE_USERNAME} \
+        dbpassword=${QUARKUS_DATASOURCE_PASSWORD} \
+    --env-vars \
+        QUARKUS_DATASOURCE_JDBC_URL=secretref:jdbcurl \
+        QUARKUS_DATASOURCE_REACTIVE_URL=secretref:reactiveurl \
+        QUARKUS_DATASOURCE_USERNAME=secretref:dbusername \
+        QUARKUS_DATASOURCE_PASSWORD=secretref:dbpassword \
+    --ingress 'external' \
+    --min-replicas 1
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
+
 ## Create a Quarkus application
 
 The Quarkus application that we create in this guide is [city-service](city-service).
@@ -197,34 +231,6 @@ az containerapp create \
     --ingress 'external' \
     --min-replicas 1
 cd ${BASE_DIR}
-```
-
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
-
-```bash
-# Deploy city-service with the existing image ghcr.io/microsoft/java-on-aca-with-ai-city-service to Azure Container Apps
-export QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
-export QUARKUS_DATASOURCE_REACTIVE_URL=postgresql://${POSTGRESQL_SERVER_NAME}.postgres.database.azure.com:5432/${DB_NAME}?sslmode=require
-export QUARKUS_DATASOURCE_USERNAME=${DB_ADMIN}
-export QUARKUS_DATASOURCE_PASSWORD=${DB_ADMIN_PWD}
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name city-service \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-city-service \
-    --environment $ACA_ENV \
-    --target-port 8080 \
-    --secrets \
-        jdbcurl=${QUARKUS_DATASOURCE_JDBC_URL} \
-        reactiveurl=${QUARKUS_DATASOURCE_REACTIVE_URL} \
-        dbusername=${QUARKUS_DATASOURCE_USERNAME} \
-        dbpassword=${QUARKUS_DATASOURCE_PASSWORD} \
-    --env-vars \
-        QUARKUS_DATASOURCE_JDBC_URL=secretref:jdbcurl \
-        QUARKUS_DATASOURCE_REACTIVE_URL=secretref:reactiveurl \
-        QUARKUS_DATASOURCE_USERNAME=secretref:dbusername \
-        QUARKUS_DATASOURCE_PASSWORD=secretref:dbpassword \
-    --ingress 'external' \
-    --min-replicas 1
 ```
 
 ## Test the project in the cloud

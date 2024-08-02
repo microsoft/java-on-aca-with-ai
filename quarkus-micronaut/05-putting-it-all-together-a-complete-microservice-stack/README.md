@@ -6,6 +6,27 @@ Now that we have made microservices publicly available, we will incorporate a us
 
 ---
 
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time:
+
+```bash
+# Deploy weather-app with the existing image ghcr.io/microsoft/java-on-aca-with-ai-weather-app to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name weather-app \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-weather-app \
+    --environment $ACA_ENV \
+    --target-port 80 \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
+
 ## Add a front-end to the microservices stack
 
 We now have a complete microservices stack:
@@ -49,21 +70,6 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
-
-```bash
-# Deploy weather-app with the existing image ghcr.io/microsoft/java-on-aca-with-ai-weather-app to Azure Container Apps
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name weather-app \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-weather-app \
-    --environment $ACA_ENV \
-    --target-port 80 \
-    --ingress 'external' \
-    --min-replicas 1
-cd ${BASE_DIR}
-```
-
 ## Test the project in the cloud
 
 Retrieve and output the URL of Azure Container Apps `weather-app`:
@@ -89,6 +95,9 @@ Optionally, you can run the containerized VueJS application locally:
 
 ```bash
 docker run -it --rm -e CONTAINER_APP_ENV_DNS_SUFFIX=${APP_URL#https://weather-app.} -p 8080:80 weather-app
+
+# If you deploy the app with the existing image ghcr.io/microsoft/java-on-aca-with-ai-weather-app
+# docker run -it --rm -e CONTAINER_APP_ENV_DNS_SUFFIX=${APP_URL#https://weather-app.} -p 8080:80 ghcr.io/microsoft/java-on-aca-with-ai-weather-app
 ```
 
 > Note: the environment variable `CONTAINER_APP_ENV_DNS_SUFFIX` is the DNS suffix of the Azure Container Apps environment and is used to build the gateway URL. This variable is automatically set by Azure Container Apps and is injected into the container at runtime. We need to set it manually when running the container locally.

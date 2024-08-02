@@ -8,6 +8,35 @@ We'll leverage [Quarkus LangChain4j](https://docs.quarkiverse.io/quarkus-langcha
 
 ---
 
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time:
+
+```bash
+# Deploy ai-weather-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-ai-weather-application to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name ai-weather-application \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-ai-weather-application \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --secrets \
+        openairesourcename=${AZURE_OPENAI_NAME} \
+        openaideploymentname=${AZURE_OPENAI_MODEL_NAME} \
+        openaiapikey=${AZURE_OPENAI_KEY} \
+    --env-vars \
+        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_RESOURCE_NAME=secretref:openairesourcename \
+        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_DEPLOYMENT_NAME=secretref:openaideploymentname \
+        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_API_KEY=secretref:openaiapikey \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
+
 ## Create a Quarkus AI application
 
 The Quarkus AI application that we create in this guide is [ai-weather-application](ai-weather-application).
@@ -138,6 +167,8 @@ mvn clean package -DskipTests -Dnative -Dquarkus.native.container-build -Dquarku
 
 Now open http://localhost:8080 in your browser, type some questions into the `Question` prompt box and select `Ask AI` button to get an answer from Azure OpenAI.
 
+### Ask questions to AI
+
 For example, "How is the weather there on 10 May 2023?":
 
 ![Weather Question 1](media/01-question.png)
@@ -192,29 +223,6 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
-
-```bash
-# Deploy ai-weather-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-ai-weather-application to Azure Container Apps
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name ai-weather-application \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-ai-weather-application \
-    --environment $ACA_ENV \
-    --target-port 8080 \
-    --secrets \
-        openairesourcename=${AZURE_OPENAI_NAME} \
-        openaideploymentname=${AZURE_OPENAI_MODEL_NAME} \
-        openaiapikey=${AZURE_OPENAI_KEY} \
-    --env-vars \
-        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_RESOURCE_NAME=secretref:openairesourcename \
-        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_DEPLOYMENT_NAME=secretref:openaideploymentname \
-        QUARKUS_LANGCHAIN4J_AZURE_OPENAI_API_KEY=secretref:openaiapikey \
-    --ingress 'external' \
-    --min-replicas 1
-cd ${BASE_DIR}
-```
-
 ## Test the project in the cloud
 
 Retrieve and output the URL of Azure Container Apps `ai-weather-application`:
@@ -228,7 +236,7 @@ APP_URL=https://$(az containerapp show \
 echo "AI weather application URL: $APP_URL"
 ```
 
-Open the URL in a web browser, you should see a same page as the local application. Feel free to ask questions to the AI service again.
+Open the URL in a web browser, you should see a same page as the local application if you ran it before. Refer to section [Ask questions to AI](#ask-questions-to-ai) to see how AI service answers your questions.
 
 ## Next steps
 

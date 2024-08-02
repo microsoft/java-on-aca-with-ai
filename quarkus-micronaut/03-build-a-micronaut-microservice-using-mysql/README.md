@@ -6,6 +6,38 @@ In this section, we'll build a [Micronaut](https://micronaut.io/) microserver th
 
 ---
 
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time:
+
+```bash
+# Deploy weather-service with the existing image ghcr.io/microsoft/java-on-aca-with-ai-weather-service to Azure Container Apps
+export DATASOURCES_DEFAULT_URL=jdbc:mysql://$MYSQL_SERVER_NAME.mysql.database.azure.com:3306/$DB_NAME
+export DATASOURCES_DEFAULT_USERNAME=$DB_ADMIN
+export DATASOURCES_DEFAULT_PASSWORD=$DB_ADMIN_PWD
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name weather-service \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-weather-service \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --secrets \
+        datasourceurl=${DATASOURCES_DEFAULT_URL} \
+        datasourceusername=${DATASOURCES_DEFAULT_USERNAME} \
+        datasourcepassword=${DATASOURCES_DEFAULT_PASSWORD} \
+    --env-vars \
+        DATASOURCES_DEFAULT_URL=secretref:datasourceurl \
+        DATASOURCES_DEFAULT_USERNAME=secretref:datasourceusername \
+        DATASOURCES_DEFAULT_PASSWORD=secretref:datasourcepassword \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
+
 ## Create a Micronaut application
 
 The Micronaut application that we create in this guide is [weather-service](weather-service).
@@ -236,32 +268,6 @@ az containerapp create \
     --registry-server $ACR_LOGIN_SERVER \
     --registry-username $ACR_USER_NAME \
     --registry-password $ACR_PASSWORD \
-    --target-port 8080 \
-    --secrets \
-        datasourceurl=${DATASOURCES_DEFAULT_URL} \
-        datasourceusername=${DATASOURCES_DEFAULT_USERNAME} \
-        datasourcepassword=${DATASOURCES_DEFAULT_PASSWORD} \
-    --env-vars \
-        DATASOURCES_DEFAULT_URL=secretref:datasourceurl \
-        DATASOURCES_DEFAULT_USERNAME=secretref:datasourceusername \
-        DATASOURCES_DEFAULT_PASSWORD=secretref:datasourcepassword \
-    --ingress 'external' \
-    --min-replicas 1
-cd ${BASE_DIR}
-```
-
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
-
-```bash
-# Deploy weather-service with the existing image ghcr.io/microsoft/java-on-aca-with-ai-weather-service to Azure Container Apps
-export DATASOURCES_DEFAULT_URL=jdbc:mysql://$MYSQL_SERVER_NAME.mysql.database.azure.com:3306/$DB_NAME
-export DATASOURCES_DEFAULT_USERNAME=$DB_ADMIN
-export DATASOURCES_DEFAULT_PASSWORD=$DB_ADMIN_PWD
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name weather-service \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-weather-service \
-    --environment $ACA_ENV \
     --target-port 8080 \
     --secrets \
         datasourceurl=${DATASOURCES_DEFAULT_URL} \

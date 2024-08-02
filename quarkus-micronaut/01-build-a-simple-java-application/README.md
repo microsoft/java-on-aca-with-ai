@@ -10,6 +10,27 @@ We use Quarkus and Micronaut frameworks to build the simpliest possible Java app
 
 ## Build a simple Quarkus application
 
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
+
+```bash
+# Deploy quarkus-simple-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-quarkus-simple-application to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name quarkus-simple-application \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-quarkus-simple-application \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
+
 The Quarkus application that we create in this guide is [quarkus-simple-application](quarkus-simple-application).
 
 A typical way to create Quarkus applications is to use the [Quarkus maven plugin](https://quarkus.io/guides/quarkus-maven-plugin), [Quarkus CLI](https://quarkus.io/blog/quarkus-cli/) or [Quarkus - Start coding with code.quarkus.io](https://code.quarkus.io/). Feel free to explore more outside this training. For the purposes of this training, we will only use the [Quarkus maven plugin](https://quarkus.io/guides/quarkus-maven-plugin) to create a simple Quarkus application.
@@ -111,20 +132,7 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly to save the time that is required to build Quarkus native executable and Docker image:
-
-```bash
-# Deploy quarkus-simple-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-quarkus-simple-application to Azure Container Apps
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name quarkus-simple-application \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-quarkus-simple-application \
-    --environment $ACA_ENV \
-    --target-port 8080 \
-    --ingress 'external' \
-    --min-replicas 1
-cd ${BASE_DIR}
-```
+### Test the project in the cloud
 
 Fetch the URL of the Azure Container Apps `quarkus-simple-application`:
 
@@ -144,6 +152,27 @@ curl -L "$APP_URL/hello" --silent
 ```
 
 ## Build a simple Micronaut application
+
+💡💡💡💡💡💡💡💡💡💡
+
+You're recommended to follow detailed instructions below to go through the guide, however, if you'd like to quickly see the result, you can deploy a pre-built Docker image stored in the GitHub Container Registry to the Azure Container Apps directly to save the time:
+
+```bash
+# Deploy micronaut-simple-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-micronaut-simple-application to Azure Container Apps
+az containerapp create \
+    --resource-group $RESOURCE_GROUP_NAME \
+    --name micronaut-simple-application \
+    --image ghcr.io/microsoft/java-on-aca-with-ai-micronaut-simple-application \
+    --environment $ACA_ENV \
+    --target-port 8080 \
+    --ingress 'external' \
+    --min-replicas 1
+cd ${BASE_DIR}
+```
+
+After the deployment completes, go to section [Test the project in the cloud](#test-the-project-in-the-cloud-1) to verify if it works.
+
+💡💡💡💡💡💡💡💡💡💡
 
 The Micronaut application that we create in this guide is [micronaut-simple-application](micronaut-simple-application).
 
@@ -221,20 +250,7 @@ az containerapp create \
 cd ${BASE_DIR}
 ```
 
-Alternatively, there is an existing Docker image stored in the GitHub Container Registry, you can deploy it to the Azure Container Apps directly:
-
-```bash
-# Deploy micronaut-simple-application with the existing image ghcr.io/microsoft/java-on-aca-with-ai-micronaut-simple-application to Azure Container Apps
-az containerapp create \
-    --resource-group $RESOURCE_GROUP_NAME \
-    --name micronaut-simple-application \
-    --image ghcr.io/microsoft/java-on-aca-with-ai-micronaut-simple-application \
-    --environment $ACA_ENV \
-    --target-port 8080 \
-    --ingress 'external' \
-    --min-replicas 1
-cd ${BASE_DIR}
-```
+### Test the project in the cloud
 
 Fetch the URL of the Azure Container Apps `micronaut-simple-application`:
 
