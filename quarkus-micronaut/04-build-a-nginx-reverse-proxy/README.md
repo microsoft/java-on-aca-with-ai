@@ -169,10 +169,10 @@ Invoke `/city-service/cities` and `/weather-service/weather/city` endpoints and 
 curl $APP_URL/city-service/cities --silent
 
 # You should see the weather for London, UK returned: {"city":"London, UK","description":"Quite cloudy","icon":"weather-pouring"}
-curl $APP_URL/weather-service/weather/city?name=London%2C%20UK --silent
+curl -L "$APP_URL/weather-service/weather/city?name=London%2C%20UK" --silent
 
 # You should see the weather for Paris, France returned: {"city":"Paris, France","description":"Very cloudy!","icon":"weather-fog"}
-curl $APP_URL/weather-service/weather/city?name=Paris%2C%20France --silent
+curl -L "$APP_URL/weather-service/weather/city?name=Paris%2C%20France" --silent
 ```
 
 ---
