@@ -122,7 +122,6 @@ Open the Azure Portal, navigate to the resource group, open the Application Insi
 
 * Investigate > Application map
 * Investigate > Transaction search
-* Investigate > Failures
 * Investigate > Performance
 * Monitoring > Logs > traces
 * Monitoring > Logs > requests
