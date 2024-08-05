@@ -91,14 +91,15 @@ To save time, we provide bash commands for creating all the Azure resources you 
 Define the following environment variables in your bash shell, they will be used throughout the lab:
 
 ```bash
-let "randomIdentifier=$RANDOM*$RANDOM"
+randomIdentifier=$(($RANDOM * $RANDOM))
+randomDBIdentifier=$RANDOM$RANDOM
 LOCATION=westus
 RESOURCE_GROUP_NAME=aca-lab-rg-$randomIdentifier
 POSTGRESQL_SERVER_NAME=postgres$randomIdentifier
 MYSQL_SERVER_NAME=mysql$randomIdentifier
 DB_NAME=demodb
 DB_ADMIN=demouser
-DB_ADMIN_PWD='super$ecr3t'$RANDOM$RANDO
+DB_ADMIN_PWD='super$ecr3t'$randomDBIdentifier
 REGISTRY_NAME=acr$randomIdentifier
 ACA_ENV=acaenv$randomIdentifier
 APP_INSIGHTS=appinsights$randomIdentifier
