@@ -1,14 +1,14 @@
 {
-  "image": "mcr.microsoft.com/devcontainers/universal:2",
+  "image": "mcr.microsoft.com/devcontainers/java:1-17-bullseye",
   "features": {
-    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/azure-cli:1": {},
+    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
+    "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
     "ghcr.io/devcontainers/features/java:1": {
       "version": "17.0.11-graal",
       "installGradle": "true",
-      "installMaven": "true"
+      "installMaven": "true",
+      "jdkDistro": "graal"
     }
-  },
-  "postCreateCommand": "sdk default java 17.0.11-graal"
+  }  
 }
