@@ -255,6 +255,12 @@ az cognitiveservices account create \
     --sku s0
 ```
 
+> 💡 If you are not sure which sku of OpenAI is a vailable for the selected location, you can list them using the following command:
+>
+> ```bash
+> az cognitiveservices account list-skus --kind OpenAI --location $LOCATION
+> ```
+
 Set the default rule of the Azure OpenAI service to allow network access by default.
 
 ```bash
@@ -291,6 +297,12 @@ az cognitiveservices account deployment create \
     --sku Standard \
     --capacity 10
 ```
+
+> 💡 If you are not sure which models are vailable for the created Azure OpenAI service account, you can list them using the following command:
+>
+> ```bash
+> az cognitiveservices account list-models --name $AZURE_OPENAI_NAME --resource-group $RESOURCE_GROUP_NAME
+> ```
 
 ## Preparing the code samples
 
