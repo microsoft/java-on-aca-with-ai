@@ -171,17 +171,17 @@ ACR_LOGIN_SERVER=$(az acr show \
     --resource-group $RESOURCE_GROUP_NAME \
     --name $REGISTRY_NAME \
     --query 'loginServer' \
-    --output tsv)
+    --output tsv | tr -d '\r')
 ACR_USER_NAME=$(az acr credential show \
     --resource-group $RESOURCE_GROUP_NAME \
     --name $REGISTRY_NAME \
     --query 'username' \
-    --output tsv)
+    --output tsv | tr -d '\r')
 ACR_PASSWORD=$(az acr credential show \
     --resource-group $RESOURCE_GROUP_NAME \
     --name $REGISTRY_NAME \
     --query 'passwords[0].value' \
-    --output tsv)
+    --output tsv | tr -d '\r')
 ```
 
 You will build application images and push them to this registry.
@@ -216,7 +216,7 @@ First, create an Azure Application Insights resource to receive OpenTelemetry da
 ```bash
 logAnalyticsWorkspace=$(az monitor log-analytics workspace list \
     -g $RESOURCE_GROUP_NAME \
-    --query "[0].name" -o tsv)
+    --query "[0].name" -o tsv | tr -d '\r')
 
 az monitor app-insights component create \
     --app $APP_INSIGHTS \
@@ -231,7 +231,7 @@ Next, enable OpenTelemetry for the Azure Container Apps environment and configur
 appInsightsConn=$(az monitor app-insights component show \
     --app $APP_INSIGHTS \
     -g $RESOURCE_GROUP_NAME \
-    --query 'connectionString' -o tsv)
+    --query 'connectionString' -o tsv | tr -d '\r')
 
 az containerapp env telemetry app-insights set \
   --name $ACA_ENV \
@@ -275,7 +275,7 @@ AZURE_OPENAI_KEY=$(az cognitiveservices account keys list \
     --name $AZURE_OPENAI_NAME \
     --resource-group $RESOURCE_GROUP_NAME \
     --query key1 \
-    --output tsv)
+    --output tsv | tr -d '\r')
 ```
 
 Deploy a deployment of `gpt-35-turbo-16k` model in your Azure OpenAI resource:
