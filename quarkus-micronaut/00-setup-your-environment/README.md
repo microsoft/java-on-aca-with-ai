@@ -104,7 +104,7 @@ REGISTRY_NAME=acr$randomIdentifier
 ACA_ENV=acaenv$randomIdentifier
 APP_INSIGHTS=appinsights$randomIdentifier
 AZURE_OPENAI_NAME=azure-openai$randomIdentifier
-AZURE_OPENAI_MODEL_NAME=gpt-35-turbo
+AZURE_OPENAI_MODEL_NAME=gpt-35-turbo-16k
 AZURE_OPENAI_MODEL_VERSION=0613
 ```
 
