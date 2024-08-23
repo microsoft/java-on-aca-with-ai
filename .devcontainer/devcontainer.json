@@ -2,7 +2,6 @@
   "image": "mcr.microsoft.com/devcontainers/java:1-17-bullseye",
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {},
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
     "ghcr.io/devcontainers/features/java:1": {
       "version": "17.0.11-graal",
@@ -10,5 +9,6 @@
       "installMaven": "true",
       "jdkDistro": "graal"
     }
-  }  
+  },
+  "postCreateCommand": "echo '\n\nif [ -f \"$HOME/my_environment\" ]; then\n    source \"$HOME/my_environment\"\nfi\n\nsaveenv() {\n    # Check if var_save is set\n    declare -p | grep -v \"declare -[a-z]*r\" > \"$HOME/my_environment\"\n}\n\nclearenv() {\n    echo \"\" > \"$HOME/my_environment\"\n}' >> $HOME/.bashrc"
 }
