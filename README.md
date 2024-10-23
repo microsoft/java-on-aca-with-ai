@@ -16,6 +16,8 @@ This series of guides focus on building Java applications using **Spring** framw
 
 This series of guides focus on building Java applications using **Quarkus** and **Micronaut** frameworks and running them on Azure Container Apps. It also covers how to use Azure OpenAI to build AI applications.
 
+For a third path that shows using Quarkus only, please see [link to the new repo](https://github.com/Azure-Samples/java-on-aca-quarkus).
+
 ---
 
 ## Trademarks
