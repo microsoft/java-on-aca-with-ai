@@ -1,53 +1,27 @@
 {
   "name": "weather-app",
   "version": "0.1.0",
-  "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^0.21.2",
-    "core-js": "^3.6.4",
-    "vue": "^2.6.11",
-    "vue-axios": "^2.1.5",
-    "vuetify": "^2.1.14"
+    "@mdi/font": "7.4.47",
+    "roboto-fontface": "*",
+    "vue": "^3.4.31",
+    "vuetify": "^3.6.11"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.2.3",
-    "@vue/cli-plugin-eslint": "^4.2.3",
-    "@vue/cli-service": "^4.2.3",
-    "babel-eslint": "^10.0.1",
-    "eslint": "^6.8.0",
-    "eslint-plugin-vue": "^6.2.2",
-    "sass": "^1.23.7",
-    "sass-loader": "^8.0.2",
-    "vue-cli-plugin-vuetify": "^2.0.5",
-    "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.4.3"
-  },
-  "eslintConfig": {
-    "root": true,
-    "env": {
-      "node": true
-    },
-    "extends": [
-      "plugin:vue/essential",
-      "eslint:recommended"
-    ],
-    "rules": {},
-    "parserOptions": {
-      "parser": "babel-eslint"
-    }
-  },
-  "postcss": {
-    "plugins": {
-      "autoprefixer": {}
-    }
-  },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions"
-  ]
+    "@eslint/js": "^9.13.0",
+    "@vitejs/plugin-vue": "^5.0.5",
+    "eslint": "^9.13.0",
+    "eslint-plugin-vue": "^9.29.1",
+    "globals": "^15.11.0",
+    "sass": "1.77.6",
+    "unplugin-fonts": "^1.1.1",
+    "unplugin-vue-components": "^0.27.2",
+    "vite": "^5.3.3",
+    "vite-plugin-vuetify": "^2.0.3"
+  }
 }

@@ -5,11 +5,11 @@
       color="indigo"
       dark
     >
-      <v-icon>mdi-weather-partly-cloudy</v-icon>&nbsp;
+      <v-icon>mdi-weather-partly-cloudy</v-icon>
       <v-toolbar-title>What is the weather today?</v-toolbar-title>
     </v-app-bar>
 
-    <v-content>
+    <v-main>
       <v-container
         fluid
       >
@@ -22,7 +22,7 @@
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
     <v-footer
       color="indigo"
       app
@@ -46,3 +46,9 @@
     }),
   }
 </script>
+
+<style>
+a, a:visited {
+    color: inherit;
+}
+</style>

@@ -1,16 +1,20 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
+ * main.js
+ *
+ * Bootstraps Vuetify and other plugins then mounts the App`
  */
 
-import Vue from 'vue'
+// Plugins
+import { registerPlugins } from '@/plugins'
+
+// Components
 import App from './App.vue'
-import vuetify from './plugins/vuetify';
 
-Vue.config.productionTip = false
+// Composables
+import { createApp } from 'vue'
 
-new Vue({
-  vuetify,
-  render: h => h(App)
-}).$mount('#app')
+const app = createApp(App)
+
+registerPlugins(app)
+
+app.mount('#app')

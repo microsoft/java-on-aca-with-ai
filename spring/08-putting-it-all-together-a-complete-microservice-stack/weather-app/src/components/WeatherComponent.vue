@@ -8,7 +8,7 @@
              <v-icon size="100">mdi-weather-partly-cloudy</v-icon>
         </v-col>
         <v-col cols="6">
-            <v-form ref="form">
+            <v-form ref="form" class="pb-4">
                 <v-text-field label="Spring Cloud Gateway URL" v-model="apiurl"/>
                 <v-btn class="mr-4" @click="getWeather">
                     Go
@@ -22,7 +22,7 @@
       <v-col cols="1">
       </v-col>
       <v-col cols="10">
-      <v-simple-table>
+      <v-table>
        
         <template v-slot:default>
           <thead>
@@ -42,23 +42,17 @@
           </tbody>
           </transition>
         </template>
-      </v-simple-table>
+      </v-table>
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script>
-  import Vue from "vue";
-  import axios from "axios";
-  import VueAxios from "vue-axios";
-
-  Vue.use(VueAxios, axios);
-
   export default {
-    data: function () {
+    data() {
         return {
-            apiurl: "https://gateway.CONTAINER_APP_ENV_DNS_SUFFIX",
+            apiurl: "https://GATEWAY_NAME.CONTAINER_APP_ENV_DNS_SUFFIX",
             cities: {},
             show: true
         }
@@ -66,30 +60,25 @@
     props: {
     },
     methods: {
-      getWeather() {
+      async getWeather() {
           this.show = false;
-          Vue.axios.get(this.apiurl + '/city-service/cities').catch(error => {
-            throw new Error(`REST endpoint error when fetching the cities: ${error}`);
-          }).then(response => {
-            this.cities = response.data[0];
-            let promises = [];
-            this.cities.forEach((city) => {
-              promises.push(Vue.axios.get(this.apiurl + '/weather-service/weather/city?name=' + encodeURI(city.name)));
-            });
-            let cities = {};
-            Vue.axios.all(promises).then(function(results) {
-                results.forEach(function(response, index) {
-                    cities[index] = new Object();
-                    cities[index].name = response.data.city;
-                    cities[index].description = response.data.description;
-                    cities[index].icon = response.data.icon;
-                })
-            return cities;
-            }).then((cities) => {
-              this.cities = cities;
-              this.show = true;
-            });
+          const citiesResponse = await fetch(this.apiurl + '/city-service/cities');
+          const citiesData = await citiesResponse.json();
+
+          const weatherPromises = citiesData.map(city => {
+            const url = this.apiurl + '/weather-service/weather/city?name=' + encodeURI(city.name);
+            return fetch(url).then(response => response.json());
           });
+
+          const weatherData = await Promise.all(weatherPromises);
+          this.cities = weatherData.map((response) => {
+            const city = {};
+            city.name = response.city;
+            city.description = response.description;
+            city.icon = response.icon;
+            return city;
+          });
+          this.show = true;
       }
     },
   }

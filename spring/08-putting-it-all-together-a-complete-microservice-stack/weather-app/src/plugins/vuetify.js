@@ -1,13 +1,19 @@
 /**
- * Copyright (c) Microsoft Corporation. All rights reserved.
- * Licensed under the MIT License. See LICENSE in the project root for
- * license information.
+ * plugins/vuetify.js
+ *
+ * Framework documentation: https://vuetifyjs.com`
  */
 
-import Vue from 'vue';
-import Vuetify from 'vuetify/lib';
+// Styles
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/styles'
 
-Vue.use(Vuetify);
+// Composables
+import { createVuetify } from 'vuetify'
 
-export default new Vuetify({
-});
+// https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
+export default createVuetify({
+  theme: {
+    defaultTheme: 'light',
+  },
+})
